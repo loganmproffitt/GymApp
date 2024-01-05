@@ -25,7 +25,7 @@ struct WorkoutDetailView: View {
             }
             .padding(.top) // Add padding at the top
             
-            // List
+            // List for exercises
             List {
                 Section(header: Text("Exercises").font(.caption).foregroundColor(.gray)) {
                         ForEach($workout.exercises.indices, id: \.self) { index in
