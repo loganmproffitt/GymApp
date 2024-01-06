@@ -102,7 +102,6 @@ struct ExerciseDetailView: View {
     }
 }
 
-
 struct ExerciseDetailView_Previews: PreviewProvider {
     struct PreviewWrapper: View {
         @State private var exercise = Exercise(name: "Bench Press",

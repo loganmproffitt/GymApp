@@ -10,8 +10,6 @@ import SwiftUI
 struct WorkoutDetailView: View {
     @Binding var workout: Workout
     @State private var newExerciseName: String = ""
-    
-    @State private var dragOffset: CGFloat = 0
 
     var body: some View {
         // Exercise vertical stack
@@ -30,32 +28,24 @@ struct WorkoutDetailView: View {
             // List for exercises
             List {
                 Section(header: Text("Exercises").font(.caption).foregroundColor(.gray)) {
-                        ForEach($workout.exercises.indices, id: \.self) { index in
-                            ExerciseDetailView(exercise: $workout.exercises[index])
-                        }
-                        .onDelete(perform: deleteExercise)
-                        
-                        // New exercise button
-                        HStack {
-                            Text("New Exercise")
-                            Button(action: addExercise) {
-                                HStack {
-                                    Image(systemName: "plus.circle.fill")
-                                }
+                    ForEach($workout.exercises.indices, id: \.self) { index in
+                        ExerciseDetailView(exercise: $workout.exercises[index])
+                    }
+                    .onDelete(perform: deleteExercise)
+                    
+                    // New exercise button
+                    HStack {
+                        Text("New Exercise")
+                        Button(action: addExercise) {
+                            HStack {
+                                Image(systemName: "plus.circle.fill")
                             }
                         }
+                    }
                 }
-            }/*
-            .background(Color.clear
-                .onTapGesture {
-                    hideKeyboard()
-                }
-            )*/
+            }
+            .scrollDismissesKeyboard(.interactively)
         }
-    }
-    
-    private func hideKeyboard() {
-        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
     private func addExercise() {
