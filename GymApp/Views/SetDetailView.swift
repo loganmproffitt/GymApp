@@ -18,6 +18,7 @@ struct SetDetailView: View {
                 .keyboardType(.decimalPad)
                 .multilineTextAlignment(.trailing)
                 .textFieldStyle(PlainTextFieldStyle())
+                .frame(width: 50, alignment: .trailing)
                 .padding()
                 .onDisappear {
                     viewModel.saveWorkouts()
@@ -27,12 +28,16 @@ struct SetDetailView: View {
                         viewModel.saveWorkouts()
                     }
                 }
+            
             Text("x")
                 .font(.footnote)
+                .padding(.horizontal, 5)
+            
             TextField("Reps", text: $set.reps, onCommit: viewModel.saveWorkouts)
                 .keyboardType(.decimalPad)
                 .multilineTextAlignment(.leading)
                 .textFieldStyle(PlainTextFieldStyle())
+                .frame(width: 50, alignment: .leading)
                 .padding()
                 .onDisappear {
                     viewModel.saveWorkouts()

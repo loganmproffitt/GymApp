@@ -32,8 +32,9 @@ struct WorkoutListView: View {
                         HStack {
                             Button(action: addWorkout) {
                                 HStack {
-                                    Text("Add Workout")
                                     Image(systemName: "plus.circle.fill")
+                                        .foregroundColor(.blue)
+                                    Text("Add Workout")
                                 }
                             }
                         }

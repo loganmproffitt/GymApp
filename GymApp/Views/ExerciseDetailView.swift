@@ -55,8 +55,6 @@ struct ExerciseDetailView: View {
                         }
                     }) {
                         HStack {
-                            //Text("Sets")
-                               // .font(.footnote)
                             Image(systemName: setsVisible ? "chevron.up" : "chevron.down")
                         }
                         .padding()
@@ -67,10 +65,8 @@ struct ExerciseDetailView: View {
             }
             if (setsVisible)
             {
-            // Sets with outline
-            VStack(spacing: -5) {
-                
-                
+                // Sets with outline
+                VStack(spacing: -5) {
                     // Notes button
                     Button(action: {
                         withAnimation {
@@ -103,11 +99,14 @@ struct ExerciseDetailView: View {
                             .padding(2) // Optional, for internal padding within the TextEditor
                             .background(Color(red: 0.15, green: 0.15, blue: 0.15))
                             .cornerRadius(10)
+                            .frame(minWidth: 0, maxWidth: .infinity)
                     }
                     
                     // Display sets
                     ForEach($exercise.sets.indices, id: \.self) { index in
                         HStack {
+                            Spacer()
+                            
                             // Add set
                             SetDetailView(set: $exercise.sets[index])
                             
@@ -136,11 +135,8 @@ struct ExerciseDetailView: View {
                     .padding(.top, 5)
                     .buttonStyle(BorderlessButtonStyle())
                 }
-                .padding([.horizontal, .bottom])
             }
         }
-        .padding()
-        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
     }
     
     private func addSet() {
