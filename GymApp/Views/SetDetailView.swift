@@ -13,14 +13,14 @@ struct SetDetailView: View {
     var body: some View {
         HStack(spacing: 0) {
             TextField("Weight", text: $set.weight)
-                //.keyboardType(.decimalPad)
+                .keyboardType(.decimalPad)
                 .multilineTextAlignment(.trailing)
                                 .textFieldStyle(PlainTextFieldStyle())
                                 .padding()
             Text("x")
                 .font(.footnote)
             TextField("Reps", text: $set.reps)
-                //.keyboardType(.numberPad)
+                .keyboardType(.decimalPad)
                 .multilineTextAlignment(.leading)
                                 .textFieldStyle(PlainTextFieldStyle())
                                 .padding()
