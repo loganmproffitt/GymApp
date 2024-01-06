@@ -64,7 +64,7 @@ struct WorkoutDetailView: View {
     }
     
     private func addExercise() {
-        workout.exercises.append(Exercise(name: "", sets: []))
+        workout.exercises.append(Exercise(name: "", completed: false, notes: "", sets: []))
     }
     
     private func deleteExercise(at offsets: IndexSet) {

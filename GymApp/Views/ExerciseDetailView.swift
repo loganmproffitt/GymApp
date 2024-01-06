@@ -10,6 +10,7 @@ import SwiftUI
 struct ExerciseDetailView: View {
     @Binding var exercise: Exercise
     @State private var setsVisible = false
+    @State private var notesVisible = false
     @ObservedObject var viewModel = WorkoutViewModel.shared
     @FocusState private var isTextFieldFocused: Bool
     
@@ -17,11 +18,23 @@ struct ExerciseDetailView: View {
         
         VStack {
             HStack {
+                // Check box
+                Button(action: {
+                    exercise.completed.toggle()
+                    viewModel.saveWorkouts()
+                }) {
+                    Image(systemName: exercise.completed ? "checkmark.circle.fill" : "circle")
+                        .foregroundColor(exercise.completed ? .yellow : .gray)
+                        .font(.title2) // Smaller font size for the checkbox
+                        .padding(5) // Reduced padding around the checkbox
+                }
+                .buttonStyle(BorderlessButtonStyle())
+                
                 // Exercise name (modifiable)
                 TextField(exercise.name, text: $exercise.name, onCommit: viewModel.saveWorkouts)
                     .padding(.leading)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(minWidth: 0, maxWidth: 200, alignment: .leading)
+                    //.textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(minWidth: 0, maxWidth: 300, alignment: .leading)
                     .multilineTextAlignment(.leading)
                     .onDisappear {
                         viewModel.saveWorkouts()
@@ -34,42 +47,62 @@ struct ExerciseDetailView: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    withAnimation {
-                        setsVisible.toggle()
+                HStack(spacing: -15) {
+                    // Sets button
+                    Button(action: {
+                        withAnimation {
+                            setsVisible.toggle()
+                        }
+                    }) {
+                        HStack {
+                            //Text("Sets")
+                               // .font(.footnote)
+                            Image(systemName: setsVisible ? "chevron.up" : "chevron.down")
+                        }
+                        .padding()
                     }
-                }) {
-                    HStack {
-                        Text("Sets")
-                            .font(.footnote)
-                        Image(systemName: setsVisible ? "chevron.up" : "chevron.down")
-                    }
-                    .padding()
+                    .contentShape(Rectangle())
+                    .buttonStyle(BorderlessButtonStyle())
                 }
-                .contentShape(Rectangle())
-                .buttonStyle(BorderlessButtonStyle())
-                
             }
-            
+            if (setsVisible)
+            {
             // Sets with outline
             VStack(spacing: -5) {
                 
-                if (setsVisible)
-                {
-                    // Weight / rep labels
-                    HStack(spacing: 0) {
-                        Text("Weight")
-                            .multilineTextAlignment(.trailing)
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .padding()
-                            .font(.footnote)
-                        Text("x")
-                            .font(.footnote)
-                        Text("Reps")
-                            .multilineTextAlignment(.trailing)
-                            .textFieldStyle(PlainTextFieldStyle())
-                            .padding()
-                            .font(.footnote)
+                
+                    // Notes button
+                    Button(action: {
+                        withAnimation {
+                            notesVisible.toggle()
+                        }
+                    }) {
+                        HStack {
+                            Text("Notes")
+                                .font(.footnote)
+                            Image(systemName: "note.text")
+                        }
+                        .padding()
+                    }
+                    .contentShape(Rectangle())
+                    .buttonStyle(BorderlessButtonStyle())
+                    
+                    // Notes section
+                    if (notesVisible)
+                    {
+                        TextEditor(text: $exercise.notes)
+                            .frame(height: 100)
+                            .onDisappear {
+                                viewModel.saveWorkouts()
+                            }
+                            .onChange(of: isTextFieldFocused) { oldValue, isFocused in
+                                if !isFocused {
+                                    viewModel.saveWorkouts()
+                                }
+                            }
+                            .padding(2) // Optional, for internal padding within the TextEditor
+                            .background(Color(red: 0.15, green: 0.15, blue: 0.15))
+                            .cornerRadius(10)
                     }
                     
                     // Display sets
@@ -78,13 +111,15 @@ struct ExerciseDetailView: View {
                             // Add set
                             SetDetailView(set: $exercise.sets[index])
                             
+                            Spacer()
+                            
                             // Add delete button
                             Button(action: { deleteSet(at: IndexSet(integer: index)) }) {
-                             Image(systemName: "trash")
-                             .foregroundColor(.red)
-                             }
-                             .padding(.trailing)
-                             .buttonStyle(BorderlessButtonStyle())
+                                Image(systemName: "trash")
+                                    .foregroundColor(.red)
+                            }
+                            .padding(.trailing)
+                            .buttonStyle(BorderlessButtonStyle())
                         }
                     }
                     
@@ -92,16 +127,20 @@ struct ExerciseDetailView: View {
                     HStack {
                         Button(action: addSet) {
                             HStack {
+                                Text("Add Set")
+                                    .font(.footnote)
                                 Image(systemName: "plus.circle.fill")
                             }
                         }
                     }
-                    .padding()
+                    .padding(.top, 5)
                     .buttonStyle(BorderlessButtonStyle())
                 }
+                .padding([.horizontal, .bottom])
             }
-            .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
         }
+        .padding()
+        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray, lineWidth: 1))
     }
     
     private func addSet() {
@@ -115,9 +154,10 @@ struct ExerciseDetailView: View {
     }
 }
 
+
 struct ExerciseDetailView_Previews: PreviewProvider {
     struct PreviewWrapper: View {
-        @State private var exercise = Exercise(name: "Bench Press",
+        @State private var exercise = Exercise(name: "Bench Press", completed: false, notes: "",
                         sets: [Set(weight: "135", reps: "12"), Set(weight: "165", reps: "8")])
         var body: some View {
             ExerciseDetailView(exercise: $exercise)

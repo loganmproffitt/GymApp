@@ -49,7 +49,7 @@ struct WorkoutListView: View {
         formatter.dateFormat = "MM/dd/yy"
         let dateString = formatter.string(from: currentDate)
 
-        viewModel.workouts.append(Workout(date: dateString, exercises: [Exercise.default]))
+        viewModel.workouts.append(Workout(date: dateString, notes: "", exercises: [Exercise.default]))
         viewModel.saveWorkouts()
     }
     
