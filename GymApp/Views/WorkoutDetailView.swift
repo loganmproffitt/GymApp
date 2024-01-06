@@ -10,6 +10,8 @@ import SwiftUI
 struct WorkoutDetailView: View {
     @Binding var workout: Workout
     @State private var newExerciseName: String = ""
+    @ObservedObject var viewModel = WorkoutViewModel.shared
+    @FocusState private var isTextFieldFocused: Bool
 
     var body: some View {
         // Exercise vertical stack
@@ -17,10 +19,18 @@ struct WorkoutDetailView: View {
             
             // Workout title
             HStack {
-                TextField(workout.date, text: $workout.date)
+                TextField(workout.date, text: $workout.date, onCommit: viewModel.saveWorkouts)
                     .font(.title) // Make the font larger to resemble a title
                     .bold()
                     .padding(.leading) // Add padding to align with the leading edge
+                    .onDisappear {
+                        viewModel.saveWorkouts()
+                    }
+                    .onChange(of: isTextFieldFocused) { oldValue, isFocused in
+                        if !isFocused {
+                            viewModel.saveWorkouts()
+                        }
+                    }
                 Spacer() // Pushes the TextField to the left
             }
             .padding(.top) // Add padding at the top
@@ -45,6 +55,11 @@ struct WorkoutDetailView: View {
                 }
             }
             .scrollDismissesKeyboard(.interactively)
+            .onChange(of: isTextFieldFocused) { oldValue, newValue in
+                if !newValue {
+                    viewModel.saveWorkouts()
+                }
+            }
         }
     }
     

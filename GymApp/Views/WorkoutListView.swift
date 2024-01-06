@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct WorkoutListView: View {
-    @ObservedObject var viewModel = WorkoutViewModel()
+    @ObservedObject var viewModel = WorkoutViewModel.shared
 
         var body: some View {
             NavigationView {
@@ -41,20 +41,21 @@ struct WorkoutListView: View {
                 }
             }
         }
-    
+     
     private func addWorkout() {
         // Get date and convert to string for default workout name
         let currentDate = Date()
         let formatter = DateFormatter()
-        //formatter.dateFormat = "yyyy-MM-dd"
         formatter.dateFormat = "MM/dd/yy"
         let dateString = formatter.string(from: currentDate)
 
         viewModel.workouts.append(Workout(date: dateString, exercises: [Exercise.default]))
+        viewModel.saveWorkouts()
     }
     
     private func deleteWorkout(at offsets: IndexSet) {
         viewModel.workouts.remove(atOffsets: offsets)
+        viewModel.saveWorkouts()
     }
 }
 

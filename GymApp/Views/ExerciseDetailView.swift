@@ -10,17 +10,28 @@ import SwiftUI
 struct ExerciseDetailView: View {
     @Binding var exercise: Exercise
     @State private var setsVisible = false
+    @ObservedObject var viewModel = WorkoutViewModel.shared
+    @FocusState private var isTextFieldFocused: Bool
     
     var body: some View {
         
         VStack {
             HStack {
                 // Exercise name (modifiable)
-                TextField(exercise.name, text: $exercise.name)
+                TextField(exercise.name, text: $exercise.name, onCommit: viewModel.saveWorkouts)
                     .padding(.leading)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(minWidth: 0, maxWidth: 200, alignment: .leading)
                     .multilineTextAlignment(.leading)
+                    .onDisappear {
+                        viewModel.saveWorkouts()
+                    }
+                    .onChange(of: isTextFieldFocused) { oldValue, isFocused in
+                        if !isFocused {
+                            viewModel.saveWorkouts()
+                        }
+                    }
+                
                 Spacer()
                 
                 Button(action: {
@@ -95,10 +106,12 @@ struct ExerciseDetailView: View {
     
     private func addSet() {
         exercise.sets.append(Set.default)
+        viewModel.saveWorkouts()
     }
     
     private func deleteSet(at offsets: IndexSet) {
         exercise.sets.remove(atOffsets: offsets)
+        viewModel.saveWorkouts()
     }
 }
 
