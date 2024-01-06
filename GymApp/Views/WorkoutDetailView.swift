@@ -10,6 +10,8 @@ import SwiftUI
 struct WorkoutDetailView: View {
     @Binding var workout: Workout
     @State private var newExerciseName: String = ""
+    
+    @State private var dragOffset: CGFloat = 0
 
     var body: some View {
         // Exercise vertical stack
@@ -43,8 +45,17 @@ struct WorkoutDetailView: View {
                             }
                         }
                 }
-            }
+            }/*
+            .background(Color.clear
+                .onTapGesture {
+                    hideKeyboard()
+                }
+            )*/
         }
+    }
+    
+    private func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
     
     private func addExercise() {
