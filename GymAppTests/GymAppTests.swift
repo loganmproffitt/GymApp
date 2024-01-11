@@ -1,10 +1,3 @@
-//
-//  GymAppTests.swift
-//  GymAppTests
-//
-//  Created by Logan Proffitt on 12/22/23.
-//
-
 import XCTest
 
 final class GymAppTests: XCTestCase {

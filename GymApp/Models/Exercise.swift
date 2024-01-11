@@ -1,10 +1,3 @@
-//
-//  Exercise.swift
-//  GymApp
-//
-//  Created by Logan Proffitt on 1/2/24.
-//
-
 import Foundation
 
 struct Exercise: Identifiable, Codable {
@@ -21,6 +14,7 @@ struct Exercise: Identifiable, Codable {
         Exercise(name: "", completed: false, notes: "", setCount: "", setCountModified: false, sets: [Set.default])
     }
     
+    // Init function
     init(name: String, completed: Bool, notes: String, setCount: String, setCountModified: Bool, sets: [Set] = []) {
         self.name = name
         self.sets = sets

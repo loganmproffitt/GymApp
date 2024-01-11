@@ -1,17 +1,10 @@
-//
-//  WorkoutDataManager.swift
-//  GymApp
-//
-//  Created by Logan Proffitt on 1/5/24.
-//
-
 import Foundation
 
 class WorkoutDataManager {
     static let shared = WorkoutDataManager()
     private let fileName = "workouts.json"
     
-    // Get path and append filename
+    // Append filename to path
     private var fileURL : URL {
         let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         return documentDirectory.appendingPathComponent(fileName)

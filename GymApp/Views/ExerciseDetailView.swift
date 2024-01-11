@@ -1,10 +1,3 @@
-//
-//  ExerciseDetailView.swift
-//  GymApp
-//
-//  Created by Logan Proffitt on 1/2/24.
-//
-
 import SwiftUI
 
 struct ExerciseDetailView: View {

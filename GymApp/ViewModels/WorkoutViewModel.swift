@@ -1,15 +1,8 @@
-//
-//  WorkoutViewModel.swift
-//  GymApp
-//
-//  Created by Logan Proffitt on 1/2/24.
-//
-
 import Foundation
 import SwiftUI
 
 class WorkoutViewModel: ObservableObject {
-    // Create singleton instance
+    // Create singleton instance of view model
     static let shared = WorkoutViewModel()
     
     @Published var workouts: [Workout] = []
