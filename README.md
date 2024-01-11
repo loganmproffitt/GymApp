@@ -1,0 +1,2 @@
+This is a personal project of mine that was inspired by the need for a simple workout/macro tracking app. The app allows you to track workouts in a flexible manner, providing functionality for adding and removing exercises, sets, and notes. As I continue development, I'd like to add features like workout templates, as well as a simple macro tracking section.
+Since finishing a basic version of the workouts section, my sister and I have been using the app to track our workouts. I plan on sharing the app with more friends for testing, and eventually publishing to the app store.
