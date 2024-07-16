@@ -21,6 +21,7 @@ class WorkoutViewModel: ObservableObject {
         )
     }
     
+    
     // Load saved workouts
     init() {
         workouts = WorkoutDataManager.shared.loadWorkouts()

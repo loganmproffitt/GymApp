@@ -10,6 +10,9 @@
 		1508EA2F2C4705E70012D381 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1508EA2E2C4705E70012D381 /* Day.swift */; };
 		1508EA312C47074B0012D381 /* Month.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1508EA302C47074B0012D381 /* Month.swift */; };
 		1508EA332C4707CB0012D381 /* Year.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1508EA322C4707CB0012D381 /* Year.swift */; };
+		1508EA352C4716500012D381 /* YearViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1508EA342C4716500012D381 /* YearViewModel.swift */; };
+		1508EA372C4717430012D381 /* MonthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1508EA362C4717430012D381 /* MonthViewModel.swift */; };
+		1508EA392C47178C0012D381 /* DayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1508EA382C47178C0012D381 /* DayViewModel.swift */; };
 		159D4B442B452BF50045360E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159D4B432B452BF50045360E /* ContentView.swift */; };
 		159D4B462B452C840045360E /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159D4B452B452C840045360E /* WorkoutListView.swift */; };
 		159D4B482B452CD20045360E /* MacroView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159D4B472B452CD20045360E /* MacroView.swift */; };
@@ -51,6 +54,9 @@
 		1508EA2E2C4705E70012D381 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		1508EA302C47074B0012D381 /* Month.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Month.swift; sourceTree = "<group>"; };
 		1508EA322C4707CB0012D381 /* Year.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Year.swift; sourceTree = "<group>"; };
+		1508EA342C4716500012D381 /* YearViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearViewModel.swift; sourceTree = "<group>"; };
+		1508EA362C4717430012D381 /* MonthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthViewModel.swift; sourceTree = "<group>"; };
+		1508EA382C47178C0012D381 /* DayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayViewModel.swift; sourceTree = "<group>"; };
 		159D4B432B452BF50045360E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		159D4B452B452C840045360E /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
 		159D4B472B452CD20045360E /* MacroView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacroView.swift; sourceTree = "<group>"; };
@@ -131,6 +137,9 @@
 			isa = PBXGroup;
 			children = (
 				159D4B552B4537CC0045360E /* WorkoutViewModel.swift */,
+				1508EA342C4716500012D381 /* YearViewModel.swift */,
+				1508EA362C4717430012D381 /* MonthViewModel.swift */,
+				1508EA382C47178C0012D381 /* DayViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -340,11 +349,14 @@
 				159D4B462B452C840045360E /* WorkoutListView.swift in Sources */,
 				159D4B562B4537CC0045360E /* WorkoutViewModel.swift in Sources */,
 				1508EA332C4707CB0012D381 /* Year.swift in Sources */,
+				1508EA392C47178C0012D381 /* DayViewModel.swift in Sources */,
+				1508EA352C4716500012D381 /* YearViewModel.swift in Sources */,
 				159D4B442B452BF50045360E /* ContentView.swift in Sources */,
 				159D4B532B4532330045360E /* Notes.swift in Sources */,
 				1508EA312C47074B0012D381 /* Month.swift in Sources */,
 				159D4B482B452CD20045360E /* MacroView.swift in Sources */,
 				159D4B5A2B4541D40045360E /* SetDetailView.swift in Sources */,
+				1508EA372C4717430012D381 /* MonthViewModel.swift in Sources */,
 				159D4B582B4540A80045360E /* ExerciseDetailView.swift in Sources */,
 				159D4B4F2B4531930045360E /* Exercise.swift in Sources */,
 				159D4B4D2B4531490045360E /* Workout.swift in Sources */,
