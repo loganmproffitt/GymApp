@@ -17,7 +17,10 @@ struct WorkoutListView: View {
                 }
                 .padding(.top) // Add padding at the top
                 HStack {
-                    Button(action: addWorkout) {
+                    Button(action: {
+                        selectedWorkoutID = WorkoutService.shared.addWorkout(viewModel: viewModel)
+                    })
+                        {
                         HStack {
                             Image(systemName: "plus.circle.fill")
                                 .foregroundColor(.blue)
@@ -56,33 +59,14 @@ struct WorkoutListView: View {
     }
 
     
-    private func addWorkout() {
-        // Get date
-        let date = Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "MM/dd/yy"
-        let dateString = formatter.string(from: date)
-        
-        // Get weekday
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-        let weekday = dateFormatter.string(from: date)
-        let newWorkout = Workout(name: weekday, date: dateString, notes: "", exercises: [Exercise.default])
-        viewModel.workouts.append(newWorkout)
-        viewModel.saveWorkouts()
-        
-        selectedWorkoutID = newWorkout.id
-    }
-    
     private func deleteWorkout(at offsets: IndexSet) {
         // Ensure that the offsets are within the bounds of the workouts array
         guard let indexToRemove = offsets.first, indexToRemove < viewModel.workouts.count else {
             return
         }
         
-        // Remove the workout from the view model
-        viewModel.workouts.remove(at: indexToRemove)
-        viewModel.saveWorkouts()
+        let workout = viewModel.workouts[indexToRemove]
+        WorkoutService.shared.deleteWorkout(workout: workout, from: viewModel)
         
         selectedWorkoutID = nil
     }
