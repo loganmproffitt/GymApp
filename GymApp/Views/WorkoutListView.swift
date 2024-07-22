@@ -2,6 +2,7 @@ import SwiftUI
 
 struct WorkoutListView: View {
     @ObservedObject var viewModel = WorkoutViewModel.shared
+    @ObservedObject var yearViewModel = YearViewModel.shared
     @State private var selectedWorkoutID: UUID? = nil
 
     var body: some View {
@@ -17,8 +18,9 @@ struct WorkoutListView: View {
                 }
                 .padding(.top) // Add padding at the top
                 HStack {
+                    // Add workout button
                     Button(action: {
-                        selectedWorkoutID = WorkoutService.shared.addWorkout(viewModel: viewModel)
+                        selectedWorkoutID = WorkoutService.shared.addWorkout(viewModel: yearViewModel)
                     })
                         {
                         HStack {

@@ -24,10 +24,10 @@ class WorkoutViewModel: ObservableObject {
     
     // Load saved workouts
     init() {
-        workouts = WorkoutDataManager.shared.loadWorkouts()
+       // workouts = WorkoutDataManager.shared.loadWorkouts()
     }
     
     func saveWorkouts() {
-        WorkoutDataManager.shared.saveWorkouts(workouts)
+        //WorkoutDataManager.shared.saveWorkouts(workouts)
     }
 }
