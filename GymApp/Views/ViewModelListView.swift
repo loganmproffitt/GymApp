@@ -1,5 +1,5 @@
 //
-//  WorkoutListView.swift
+//  ViewModelListView.swift
 //  GymApp
 //
 //  Created by Logan Proffitt on 7/23/24.
