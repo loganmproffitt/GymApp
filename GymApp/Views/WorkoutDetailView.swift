@@ -3,7 +3,6 @@ import SwiftUI
 struct WorkoutDetailView: View {
     @Binding var workout: Workout
     @State private var newExerciseName: String = ""
-    @ObservedObject var viewModel = WorkoutViewModel.shared
     @FocusState private var isTextFieldFocused: Bool
 
     var body: some View {
@@ -12,15 +11,15 @@ struct WorkoutDetailView: View {
             
             // Workout name and date
             HStack {
-                TextField(workout.name, text: $workout.name, onCommit: viewModel.saveWorkouts)
+                TextField(workout.name, text: $workout.name)//, onCommit: viewModel.saveWorkouts)
                     .font(.title)
                     .padding(.leading)
                     .onDisappear {
-                        viewModel.saveWorkouts()
+                        //viewModel.saveWorkouts()
                     }
                     .onChange(of: isTextFieldFocused) { oldValue, isFocused in
                         if !isFocused {
-                            viewModel.saveWorkouts()
+                            //viewModel.saveWorkouts()
                         }
                     }
                 Spacer() // Pushes the TextField to the left
@@ -54,7 +53,7 @@ struct WorkoutDetailView: View {
             .scrollDismissesKeyboard(.interactively)
             .onChange(of: isTextFieldFocused) { oldValue, newValue in
                 if !newValue {
-                    viewModel.saveWorkouts()
+                    //viewModel.saveWorkouts()
                 }
             }
         }
@@ -69,9 +68,10 @@ struct WorkoutDetailView: View {
     }
 }
 
+/*
 struct WorkoutDetailView_Previews: PreviewProvider {
     static var previews: some View {
         WorkoutListView(viewModel: WorkoutViewModel())
     }
 }
-
+*/

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct SetDetailView: View {
     @Binding var set: Set
-    @ObservedObject var viewModel = WorkoutViewModel.shared
+    //@ObservedObject var viewModel = WorkoutViewModel.shared
     @FocusState private var isTextFieldFocused: Bool
 
     var body: some View {
@@ -13,7 +13,7 @@ struct SetDetailView: View {
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding()
                 .onChange (of: set.weight) {
-                    viewModel.saveWorkouts()
+                    //viewModel.saveWorkouts()
                 }
             
             Text("x")
@@ -26,7 +26,7 @@ struct SetDetailView: View {
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding()
                 .onChange (of: set.reps) {
-                    viewModel.saveWorkouts()
+                    //viewModel.saveWorkouts()
                 }
             }
         }

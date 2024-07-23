@@ -2,16 +2,30 @@ import Foundation
 import SwiftUI
 
 class WorkoutViewModel: ObservableObject {
-    // Create singleton instance of view model
-    static let shared = WorkoutViewModel()
     
     @Published var workouts: [Workout] = []
+    @Published var yearMonth: YearMonth
     
-    // Function for creating bindings for workout list
+    init(workouts: [Workout], yearMonth: YearMonth) {
+        self.workouts = workouts
+        self.yearMonth = yearMonth
+    }
+    
+    func addWorkout(date: Date) -> UUID {
+        // Populate new workout
+        var workout = Workout.default
+        workout.rawDate = date
+        workout.date = DateService.getFormattedDate(for: date)
+        workout.name = DateService.getWeekday(for: date)
+        
+        workouts.append(workout)
+        return workout.id
+    }
+    
     func binding(for workoutID: UUID) -> Binding<Workout> {
         return Binding<Workout>(
             get: {
-                self.workouts.first { $0.id == workoutID } ?? Workout.default // Provide a default or handle nil
+                self.workouts.first { $0.id == workoutID } ?? Workout.default
             },
             set: {
                 if let index = self.workouts.firstIndex(where: { $0.id == workoutID }) {
@@ -19,15 +33,5 @@ class WorkoutViewModel: ObservableObject {
                 }
             }
         )
-    }
-    
-    
-    // Load saved workouts
-    init() {
-       // workouts = WorkoutDataManager.shared.loadWorkouts()
-    }
-    
-    func saveWorkouts() {
-        //WorkoutDataManager.shared.saveWorkouts(workouts)
     }
 }

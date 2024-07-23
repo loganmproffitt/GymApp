@@ -6,58 +6,45 @@ struct WorkoutsPageView: View {
 
     var body: some View {
         NavigationStack {
-            VStack(spacing: 5) {
-                
-                // Workout text
-                HStack {
-                    Text("Workouts")
-                        .font(.title)
-                        .bold()
-                        .padding(.leading)
-                    Spacer()
+            
+            ZStack {
+                VStack(spacing: 5) {
+                    
+                    // Workout text
+                    HStack {
+                        Text("Workouts")
+                            .font(.title)
+                            .bold()
+                            .padding(.leading)
+                        Spacer()
+                    }
+                    .padding(.top) // Add padding at the top
+                    
+                    // List view models
+                    ViewModelListView()
                 }
-                .padding(.top) // Add padding at the top
                 
                 // Add workout button
-                HStack {
-                    Button(action: {
-                        selectedWorkoutID = controller.addWorkout(providedDate: Date())
-                    })
-                        {
-                        HStack {
-                            Image(systemName: "plus.circle.fill")
-                                .foregroundColor(.blue)
-                            Text("New Workout")
+                VStack {
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            selectedWorkoutID = controller.addWorkout(providedDate: Date())
+                        }) {
+                                Image(systemName: "plus.circle.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 48, height: 48)
+                                    .foregroundColor(.blue)
+                            .padding()
                         }
+                        .padding()
                     }
                 }
-                .padding(.top)
-                .buttonStyle(.bordered)
-                
-                ScrollView {
-                    
-                    // Loop through view models
-                    ForEach(Array(controller.viewModels), id: \.key) { yearMonth, viewModel in
-                        VStack {
-                            // Year and month display
-                            HStack {
-                                Text("\(String(yearMonth.year)) \(DateService.getMonthName(for: yearMonth.month))")
-                            }
-                            
-                            // Display workouts
-                            ForEach(viewModel.workouts) { workout in
-                                HStack {
-                                    Text(workout.name)
-                                    Text(workout.date)
-                                }
-                            }
-                            
-                        }
-                    }
-                    
-                }
-                
-            }/*
+            }
+            
+                /*
             .navigationDestination(isPresented: Binding(
                 get: { selectedWorkoutID != nil },
                 set: { newID in

@@ -14,7 +14,7 @@ struct ContentView: View {
             .contentShape(Rectangle())
 
             TabView(selection: $selectedTab) {
-                WorkoutListView()
+                WorkoutsPageView()
                     .tag(0)
 
                 MacroView()

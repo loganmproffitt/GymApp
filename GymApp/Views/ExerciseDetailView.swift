@@ -7,7 +7,7 @@ struct ExerciseDetailView: View {
     
     @State private var setsValue = ""
     
-    @ObservedObject var viewModel = WorkoutViewModel.shared
+    //@ObservedObject var viewModel = WorkoutViewModel.shared
     @FocusState private var isTextFieldFocused: Bool
     
     var body: some View {
@@ -17,7 +17,7 @@ struct ExerciseDetailView: View {
                 // Check box
                 Button(action: {
                     exercise.completed.toggle()
-                    viewModel.saveWorkouts()
+                   // viewModel.saveWorkouts()
                 }) {
                     Image(systemName: exercise.completed ? "checkmark.circle.fill" : "circle")
                         .foregroundColor(exercise.completed ? .yellow : .gray)
@@ -32,7 +32,7 @@ struct ExerciseDetailView: View {
                     .frame(minWidth: 0, maxWidth: 300, alignment: .leading)
                     .multilineTextAlignment(.leading)
                     .onChange (of: exercise.name) {
-                        viewModel.saveWorkouts()
+                        //viewModel.saveWorkouts()
                     }
                 
                 Spacer()
@@ -90,7 +90,7 @@ struct ExerciseDetailView: View {
                         TextEditor(text: $exercise.notes)
                             .frame(height: 100)
                             .onChange (of: exercise.notes) {
-                                viewModel.saveWorkouts()
+                                //viewModel.saveWorkouts()
                             }
                             .padding(2) // Optional, for internal padding within the TextEditor
                             .background(Color(red: 0.15, green: 0.15, blue: 0.15))
@@ -156,7 +156,7 @@ struct ExerciseDetailView: View {
         {
             exercise.setCountModified = true
             exercise.setCount = setsValue
-            viewModel.saveWorkouts()
+            //viewModel.saveWorkouts()
         }
     }
     
@@ -172,13 +172,13 @@ struct ExerciseDetailView: View {
     private func addSet() {
         exercise.sets.append(Set.default)
         updateSetCount()
-        viewModel.saveWorkouts()
+        //viewModel.saveWorkouts()
     }
     
     private func deleteSet(at offsets: IndexSet) {
         exercise.sets.remove(atOffsets: offsets)
         updateSetCount()
-        viewModel.saveWorkouts()
+        //viewModel.saveWorkouts()
     }
 }
 
