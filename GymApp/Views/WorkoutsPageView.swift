@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct WorkoutsPageView: View {
-    @ObservedObject var controller = WorkoutController.shared
+    @ObservedObject var controller = WorkoutListController.shared
     @State private var selectedWorkoutID: UUID? = nil
 
     var body: some View {

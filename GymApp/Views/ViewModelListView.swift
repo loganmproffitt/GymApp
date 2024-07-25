@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ViewModelListView: View {
     
-    @ObservedObject var controller = WorkoutController.shared
+    @ObservedObject var controller = WorkoutListController.shared
     
     var body: some View {
     

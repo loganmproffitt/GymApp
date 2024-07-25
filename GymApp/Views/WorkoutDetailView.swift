@@ -1,7 +1,17 @@
 import SwiftUI
 
 struct WorkoutDetailView: View {
+    
+    @EnvironmentObject var viewModel: WorkoutViewModel
     @Binding var workout: Workout
+    
+    @StateObject private var controller: WorkoutController
+    
+    init(workout: Binding<Workout>) {
+        self._workout = workout
+        self._controller = StateObject(wrappedValue: WorkoutController(workout: workout))
+    }
+    
     @State private var newExerciseName: String = ""
     @FocusState private var isTextFieldFocused: Bool
 
@@ -31,17 +41,21 @@ struct WorkoutDetailView: View {
             }
             .padding(.top) // Add padding at the top
             
-            // List for exercises
+            
+            // Exercises list
             List {
                 Section(header: Text("Exercises").font(.caption).foregroundColor(.gray)) {
+                    
+                    // List exercises
                     ForEach($workout.exercises.indices, id: \.self) { index in
-                        ExerciseDetailView(exercise: $workout.exercises[index])
+                        ExerciseCardView(exercise: $workout.exercises[index])
                     }
                     .onDelete(perform: deleteExercise)
                     
+                
                     // New exercise button
                     HStack {
-                        Button(action: addExercise) {
+                        Button(action: controller.addExercise) {
                             HStack {
                                 Image(systemName: "plus.circle.fill")
                             }
@@ -49,6 +63,8 @@ struct WorkoutDetailView: View {
                         Text("Add Exercise")
                     }
                 }
+                
+                
             }
             .scrollDismissesKeyboard(.interactively)
             .onChange(of: isTextFieldFocused) { oldValue, newValue in
@@ -59,19 +75,13 @@ struct WorkoutDetailView: View {
         }
     }
     
-    private func addExercise() {
-        workout.exercises.append(Exercise(name: "", completed: false, notes: "", setCount: "", setCountModified: false, sets: []))
-    }
-    
     private func deleteExercise(at offsets: IndexSet) {
-        workout.exercises.remove(atOffsets: offsets)
+        controller.deleteExercise(at: offsets)
     }
 }
 
-/*
 struct WorkoutDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutListView(viewModel: WorkoutViewModel())
+        WorkoutsPageView()
     }
 }
-*/

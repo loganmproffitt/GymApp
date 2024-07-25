@@ -1,8 +1,16 @@
-//
-//  ExerciseDetailView.swift
-//  GymApp
-//
-//  Created by Logan Proffitt on 7/24/24.
-//
+import SwiftUI
 
-import Foundation
+struct ExerciseDetailView: View {
+    var body: some View {
+        Text("hi")
+        
+    }
+    
+    
+}
+
+struct ExerciseDetailView_Previews: PreviewProvider {
+    static var previews: some View {
+        WorkoutsPageView()
+    }
+}

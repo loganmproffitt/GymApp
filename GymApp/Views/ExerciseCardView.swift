@@ -185,7 +185,7 @@ struct ExerciseCardView: View {
     }
 }
 
-struct ExerciseDetailView_Previews: PreviewProvider {
+struct ExerciseCardView_Previews: PreviewProvider {
     struct PreviewWrapper: View {
         @State private var exercise = Exercise(name: "Bench Press", completed: false, notes: "", setCount: "", setCountModified: false,
                         sets: [Set(weight: "135", reps: "12"), Set(weight: "165", reps: "8")])
