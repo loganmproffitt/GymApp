@@ -4,7 +4,7 @@ class WorkoutListController: ObservableObject {
     
     static let shared = WorkoutListController()
     
-    @Published var viewModels: [ YearMonth: WorkoutViewModel ] = [:]
+    @Published var viewModels: [ YearMonth: WorkoutsViewModel ] = [:]
     
     func addWorkout(providedDate: Date? = nil) -> UUID {
         let date = providedDate ?? Date()
@@ -12,7 +12,7 @@ class WorkoutListController: ObservableObject {
         return workoutID
     }
     
-    func getViewModel(for date: Date) -> WorkoutViewModel {
+    func getViewModel(for date: Date) -> WorkoutsViewModel {
         // Get year and month from date
         let yearMonth = DateService.getYearMonth(for: date)
         
@@ -22,7 +22,7 @@ class WorkoutListController: ObservableObject {
         }
         else {
             // If not found, create a new view model from the given year and month
-            let newViewModel = WorkoutViewModel(workouts: [], yearMonth: yearMonth)
+            let newViewModel = WorkoutsViewModel(workouts: [], yearMonth: yearMonth)
             viewModels[yearMonth] = newViewModel
             return newViewModel
         }

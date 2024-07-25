@@ -2,14 +2,11 @@ import SwiftUI
 
 struct WorkoutDetailView: View {
     
-    @EnvironmentObject var viewModel: WorkoutViewModel
-    @Binding var workout: Workout
+    @ObservedObject private var controller: WorkoutController
     
-    @StateObject private var controller: WorkoutController
-    
-    init(workout: Binding<Workout>) {
-        self._workout = workout
-        self._controller = StateObject(wrappedValue: WorkoutController(workout: workout))
+    init(controller: WorkoutController) {
+        self.controller = controller
+
     }
     
     @State private var newExerciseName: String = ""
@@ -21,7 +18,7 @@ struct WorkoutDetailView: View {
             
             // Workout name and date
             HStack {
-                TextField(workout.name, text: $workout.name)//, onCommit: viewModel.saveWorkouts)
+                TextField(controller.workout.name, text: $controller.workout.name)//, onCommit: viewModel.saveWorkouts)
                     .font(.title)
                     .padding(.leading)
                     .onDisappear {
@@ -34,7 +31,7 @@ struct WorkoutDetailView: View {
                     }
                 Spacer() // Pushes the TextField to the left
                 
-                Text(workout.date)
+                Text(controller.workout.date)
                     .font(.caption)
                     .foregroundColor(.gray)
                     .padding(.trailing)
@@ -47,8 +44,8 @@ struct WorkoutDetailView: View {
                 Section(header: Text("Exercises").font(.caption).foregroundColor(.gray)) {
                     
                     // List exercises
-                    ForEach($workout.exercises.indices, id: \.self) { index in
-                        ExerciseCardView(exercise: $workout.exercises[index])
+                    ForEach($controller.workout.exercises.indices, id: \.self) { index in
+                        ExerciseCardView(exercise: $controller.workout.exercises[index])
                     }
                     .onDelete(perform: deleteExercise)
                     

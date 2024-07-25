@@ -1,8 +1,8 @@
 import SwiftUI
 
 struct SetDetailView: View {
+    
     @Binding var set: Set
-    //@ObservedObject var viewModel = WorkoutViewModel.shared
     @FocusState private var isTextFieldFocused: Bool
 
     var body: some View {

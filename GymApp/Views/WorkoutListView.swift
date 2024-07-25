@@ -2,20 +2,21 @@ import SwiftUI
 
 struct WorkoutListView: View {
     
-    var viewModel: WorkoutViewModel
+    var viewModel: WorkoutsViewModel
     
     var body: some View {
         List {
             VStack {
                 // Display workouts
-                ForEach(viewModel.workouts) { workout in
-                    NavigationLink(destination: WorkoutDetailView(workout: viewModel.binding(for: workout.id))) {
+                ForEach(viewModel.workouts.indices, id: \.self) { index in
+                    NavigationLink(destination: 
+                                    WorkoutDetailView(controller: WorkoutController(workout: viewModel.workouts[index], viewModel: viewModel))) {
                         HStack {
-                            Text(workout.name)
+                            Text("\(viewModel.workouts[index].name)")
                             Spacer()
-                            Text(workout.date)
+                            Text("\(viewModel.workouts[index].date)")
                         }
-                        .padding()
+                    .padding()
                     }
                 }
             }

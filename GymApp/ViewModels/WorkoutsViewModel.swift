@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-class WorkoutViewModel: ObservableObject {
+class WorkoutsViewModel: ObservableObject {
     
     @Published var workouts: [Workout] = []
     @Published var yearMonth: YearMonth
