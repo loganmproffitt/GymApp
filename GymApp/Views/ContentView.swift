@@ -17,8 +17,6 @@ struct ContentView: View {
                 WorkoutsPageView()
                     .tag(0)
 
-                MacroView()
-                    .tag(1)
             }
         }
     }

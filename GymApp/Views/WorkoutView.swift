@@ -1,11 +1,11 @@
 import SwiftUI
 
-struct WorkoutDetailView: View {
+struct WorkoutView: View {
     
-    @ObservedObject private var controller: WorkoutController
+    @ObservedObject private var workoutController: WorkoutController
     
     init(controller: WorkoutController) {
-        self.controller = controller
+        self.workoutController = controller
 
     }
     
@@ -18,7 +18,7 @@ struct WorkoutDetailView: View {
             
             // Workout name and date
             HStack {
-                TextField(controller.workout.name, text: $controller.workout.name)//, onCommit: viewModel.saveWorkouts)
+                TextField(workoutController.workout.name, text: $workoutController.workout.name)//, onCommit: viewModel.saveWorkouts)
                     .font(.title)
                     .padding(.leading)
                     .onDisappear {
@@ -31,7 +31,7 @@ struct WorkoutDetailView: View {
                     }
                 Spacer() // Pushes the TextField to the left
                 
-                Text(controller.workout.date)
+                Text(workoutController.workout.date)
                     .font(.caption)
                     .foregroundColor(.gray)
                     .padding(.trailing)
@@ -44,15 +44,19 @@ struct WorkoutDetailView: View {
                 Section(header: Text("Exercises").font(.caption).foregroundColor(.gray)) {
                     
                     // List exercises
-                    ForEach($controller.workout.exercises.indices, id: \.self) { index in
-                        ExerciseCardView(exercise: $controller.workout.exercises[index])
+                    ForEach(workoutController.workout.exercises.indices, id: \.self) { index in
+                        ExerciseCardView(exercise: $workoutController.workout.exercises[index])
                     }
-                    .onDelete(perform: deleteExercise)
+                    .onDelete { indexSet in
+                            if let index = indexSet.first {
+                                workoutController.deleteExercise(at: index)
+                            }
+                        }
                     
                 
                     // New exercise button
                     HStack {
-                        Button(action: controller.addExercise) {
+                        Button(action: workoutController.addExercise) {
                             HStack {
                                 Image(systemName: "plus.circle.fill")
                             }
@@ -72,8 +76,8 @@ struct WorkoutDetailView: View {
         }
     }
     
-    private func deleteExercise(at offsets: IndexSet) {
-        controller.deleteExercise(at: offsets)
+    private func deleteExercise(at index: Int) {
+        workoutController.deleteExercise(at: index)
     }
 }
 

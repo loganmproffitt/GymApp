@@ -3,10 +3,10 @@ import SwiftUI
 
 class WorkoutsViewModel: ObservableObject {
     
-    @Published var workouts: [Workout] = []
+    @Published var workouts: [WorkoutViewModel] = []
     @Published var yearMonth: YearMonth
     
-    init(workouts: [Workout], yearMonth: YearMonth) {
+    init(workouts: [WorkoutViewModel], yearMonth: YearMonth) {
         self.workouts = workouts
         self.yearMonth = yearMonth
     }
@@ -18,14 +18,14 @@ class WorkoutsViewModel: ObservableObject {
         workout.date = DateService.getFormattedDate(for: date)
         workout.name = DateService.getWeekday(for: date)
         
-        workouts.append(workout)
+        workouts.append(WorkoutViewModel(workout: workout))
         return workout.id
     }
     
-    func binding(for workoutID: UUID) -> Binding<Workout> {
-        return Binding<Workout>(
+    func binding(for workoutID: UUID) -> Binding<WorkoutViewModel> {
+        return Binding<WorkoutViewModel>(
             get: {
-                self.workouts.first { $0.id == workoutID } ?? Workout.default
+                self.workouts.first { $0.id == workoutID } ?? WorkoutViewModel(workout: Workout.default)
             },
             set: {
                 if let index = self.workouts.firstIndex(where: { $0.id == workoutID }) {

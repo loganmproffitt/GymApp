@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct WorkoutListView: View {
+struct WorkoutsViewModelView: View {
     
     var viewModel: WorkoutsViewModel
     
@@ -9,8 +9,8 @@ struct WorkoutListView: View {
             VStack {
                 // Display workouts
                 ForEach(viewModel.workouts.indices, id: \.self) { index in
-                    NavigationLink(destination: 
-                                    WorkoutDetailView(controller: WorkoutController(workout: viewModel.workouts[index], viewModel: viewModel))) {
+                    NavigationLink(destination:
+                                    WorkoutView(controller: WorkoutController(workout: viewModel.workouts[index], viewModel: viewModel))) {
                         HStack {
                             Text("\(viewModel.workouts[index].name)")
                             Spacer()

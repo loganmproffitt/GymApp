@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct ViewModelListView: View {
+struct ViewModelsListView: View {
     
     @ObservedObject var controller = WorkoutListController.shared
     
@@ -10,7 +10,7 @@ struct ViewModelListView: View {
         ForEach(Array(controller.viewModels), id: \.key) { yearMonth, viewModel in
             VStack {
                 // List workouts
-                WorkoutListView(viewModel: viewModel)
+                WorkoutsViewModelView(viewModel: viewModel)
             }
         }
     }

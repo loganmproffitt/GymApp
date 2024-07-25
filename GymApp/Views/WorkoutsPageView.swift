@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct WorkoutsPageView: View {
-    @ObservedObject var controller = WorkoutListController.shared
+    @ObservedObject var workoutsController = WorkoutListController.shared
     @State private var selectedWorkoutID: UUID? = nil
 
     var body: some View {
@@ -21,7 +21,7 @@ struct WorkoutsPageView: View {
                     .padding(.top) // Add padding at the top
                     
                     // List view models
-                    ViewModelListView()
+                    ViewModelsListView()
                 }
                 
                 // Add workout button
@@ -30,7 +30,7 @@ struct WorkoutsPageView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            selectedWorkoutID = controller.addWorkout(providedDate: Date())
+                            selectedWorkoutID = workoutsController.addWorkout(providedDate: Date())
                         }) {
                                 Image(systemName: "plus.circle.fill")
                                     .resizable()
