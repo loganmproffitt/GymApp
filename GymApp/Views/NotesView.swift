@@ -2,13 +2,13 @@ import SwiftUI
 
 struct NotesView: View {
     
-    @Binding var exercise: Exercise
+    @EnvironmentObject var exerciseViewModel: ExerciseViewModel
     
     var body: some View {
-        TextEditor(text: $exercise.notes)
+        TextEditor(text: $exerciseViewModel.notes)
         .frame(height: 100)
-        .onChange (of: exercise.notes) {
-        //viewModel.saveWorkouts()
+        .onChange (of: exerciseViewModel.notes) { oldValue, newValue in
+            exerciseViewModel.notes = newValue
         }
         .padding(2) // Optional, for internal padding within the TextEditor
         .background(Color(red: 0.15, green: 0.15, blue: 0.15))

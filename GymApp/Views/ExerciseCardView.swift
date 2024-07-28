@@ -1,10 +1,11 @@
 import SwiftUI
 
 struct ExerciseCardView: View {
-    @Binding var exercise: Exercise
+    
+    @ObservedObject var exerciseViewModel: ExerciseViewModel
+    
     @State private var setsVisible = false
     @State private var notesVisible = false
-    
     @State private var setsValue = ""
     
     //@ObservedObject var viewModel = WorkoutViewModel.shared
@@ -17,11 +18,10 @@ struct ExerciseCardView: View {
                 
                 // Check box
                 Button(action: {
-                    exercise.completed.toggle()
-                   // viewModel.saveWorkouts()
+                    exerciseViewModel.toggleCheckbox()
                 }) {
-                    Image(systemName: exercise.completed ? "checkmark.circle.fill" : "circle")
-                        .foregroundColor(exercise.completed ? .yellow : .gray)
+                    Image(systemName: exerciseViewModel.completed ? "checkmark.circle.fill" : "circle")
+                        .foregroundColor(exerciseViewModel.completed ? .yellow : .gray)
                         .font(.title2) // Smaller font size for the checkbox
                         .padding(3) // Reduced padding around the checkbox
                 }
@@ -29,12 +29,12 @@ struct ExerciseCardView: View {
                 
                 
                 // Exercise name (modifiable)
-                TextField("Exercise", text: $exercise.name)
+                TextField("Exercise", text: $exerciseViewModel.name)
                     .padding(.leading, 3)
                     .frame(minWidth: 0, maxWidth: 300, alignment: .leading)
                     .multilineTextAlignment(.leading)
-                    .onChange (of: exercise.name) {
-                        //viewModel.saveWorkouts()
+                    .onChange(of: exerciseViewModel.name) { oldValue, newValue in
+                        exerciseViewModel.name = newValue
                     }
                 
                 Spacer()
@@ -42,8 +42,8 @@ struct ExerciseCardView: View {
                 
                 // Set Count
                 TextField(setsValue, text: $setsValue)
-                    .onChange (of: setsValue) {
-                        //modifySetCount()
+                    .onChange (of: setsValue) { oldValue, newValue in
+                        exerciseViewModel.setCount = newValue
                     }
                     .padding(.leading, 3)
                     .frame(minWidth: 0, maxWidth: 300, alignment: .leading)
@@ -71,7 +71,8 @@ struct ExerciseCardView: View {
             // Display exercise details
             if (setsVisible)
             {
-                ExerciseDetailView(exercise: $exercise)
+                ExerciseDetailView()
+                    .environmentObject(exerciseViewModel)
             }
         }/*
         .onAppear {
@@ -92,7 +93,7 @@ struct ExerciseCardView_Previews: PreviewProvider {
         @State private var exercise = Exercise(name: "Bench Press", completed: false, notes: "", setCount: "", setCountModified: false,
                         sets: [Set(weight: "135", reps: "12"), Set(weight: "165", reps: "8")])
         var body: some View {
-            ExerciseCardView(exercise: $exercise)
+            ExerciseCardView(exerciseViewModel: ExerciseViewModel(exercise: exercise))
         }
     }
 

@@ -45,7 +45,8 @@ struct WorkoutView: View {
                     
                     // List exercises
                     ForEach(workoutController.workout.exercises.indices, id: \.self) { index in
-                        ExerciseCardView(exercise: $workoutController.workout.exercises[index])
+                        ExerciseCardView(
+                            exerciseViewModel: ExerciseViewModel(exercise: workoutController.workout.exercises[index]))
                     }
                     .onDelete { indexSet in
                             if let index = indexSet.first {

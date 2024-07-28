@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ExerciseDetailView: View {
     
-    @Binding var exercise: Exercise
+    @EnvironmentObject var exerciseViewModel: ExerciseViewModel
     @State private var setsVisible = false
     @State private var notesVisible = false
 
@@ -27,53 +27,51 @@ struct ExerciseDetailView: View {
             }
             .contentShape(Rectangle())
             .buttonStyle(BorderlessButtonStyle())
-
-            
-             // Notes section
-             if (notesVisible)
-             {
-                 NotesView(exercise: $exercise)
-             }
             
             
-            // Display sets
-            ForEach($exercise.sets.indices, id: \.self) { index in
-                HStack {
-                    Spacer()
-                    
-                    // Add set
-                    SetDetailView(set: $exercise.sets[index])
-                    
-                    Spacer()
-                    /*
-                     // Add delete button
-                     Button(action: { deleteSet(at: IndexSet(integer: index)) }) {
-                     Image(systemName: "trash")
-                     .foregroundColor(.red)
-                     }
-                     .padding(.trailing)
-                     .buttonStyle(BorderlessButtonStyle())*/
-                }
+            // Notes section
+            if (notesVisible)
+            {
+                NotesView()
+                .environmentObject(exerciseViewModel)
             }
             
             
-            /*
-             // Add set button
-             HStack {
-             Button(action: addSet) {
-             HStack {
-             Text("Add Set")
-             .font(.footnote)
-             Image(systemName: "plus.circle.fill")
-             }
-             }
-             }
-             .padding(.top, 5)
-             .buttonStyle(BorderlessButtonStyle())
-             }*/
+            // Display sets
+            ForEach(exerciseViewModel.exercise.sets.indices, id: \.self) { index in
+                HStack {
+                    Spacer()
+                    
+                    // Add set detail view
+                    SetDetailView(setViewModel: SetViewModel(set: exerciseViewModel.exercise.sets[index]))
+                    
+                    Spacer()
+                    
+                    // Add delete button
+                    Button(action: {
+                        exerciseViewModel.deleteSet(at: index)
+                    }) {
+                        Image(systemName: "trash")
+                            .foregroundColor(.red)
+                    }
+                    .padding(.trailing)
+                }
+            }
+            
+            // Add set button
+            HStack {
+                Button(action: exerciseViewModel.addSet) {
+                    HStack {
+                        Text("Add Set")
+                            .font(.footnote)
+                        Image(systemName: "plus.circle.fill")
+                        
+                    }
+                }
+                .padding(.top, 5)
+                .buttonStyle(BorderlessButtonStyle())
+            }
         }
-        
-        
     }
     
     struct ExerciseDetailView_Previews: PreviewProvider {

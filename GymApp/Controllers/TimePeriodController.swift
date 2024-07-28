@@ -1,12 +1,13 @@
 import Foundation
+import RealmSwift
 
-class WorkoutListController: ObservableObject {
+class TimePeriodController: ObservableObject {
     
-    static let shared = WorkoutListController()
+    static let shared = TimePeriodController()
     
     @Published var viewModels: [ YearMonth: WorkoutsViewModel ] = [:]
     
-    func addWorkout(providedDate: Date? = nil) -> UUID {
+    func addWorkout(providedDate: Date? = nil) -> ObjectId {
         let date = providedDate ?? Date()
         let workoutID = getViewModel(for: date).addWorkout(date: date)
         return workoutID
@@ -18,7 +19,7 @@ class WorkoutListController: ObservableObject {
         
         // Check for existing view model
         if let viewModel = viewModels[yearMonth] {
-            return viewModel
+            return  viewModel
         }
         else {
             // If not found, create a new view model from the given year and month

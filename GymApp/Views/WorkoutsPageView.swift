@@ -1,8 +1,9 @@
 import SwiftUI
+import RealmSwift
 
 struct WorkoutsPageView: View {
-    @ObservedObject var workoutsController = WorkoutListController.shared
-    @State private var selectedWorkoutID: UUID? = nil
+    @ObservedObject var workoutsController = TimePeriodController.shared
+    @State private var selectedWorkoutID: ObjectId? = nil
 
     var body: some View {
         NavigationStack {

@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ViewModelsListView: View {
     
-    @ObservedObject var controller = WorkoutListController.shared
+    @ObservedObject var controller = TimePeriodController.shared
     
     var body: some View {
     

@@ -1,16 +1,18 @@
 import Foundation
+import RealmSwift
 
-struct Set: Identifiable, Codable {
-    var id = UUID()
-    var weight: String
-    var reps: String
-    
+class Set: Object, Identifiable {
+    @Persisted(primaryKey: true) var id: ObjectId = ObjectId.generate()
+    @Persisted var weight: String = ""
+    @Persisted var reps: String = ""
+
     static var `default`: Set {
-            Set(weight: "", reps: "")
+        return Set(weight: "", reps: "")
     }
-    
-    init(weight: String, reps: String) {
-            self.weight = weight
-            self.reps = reps
+
+    convenience init(weight: String, reps: String) {
+        self.init()
+        self.weight = weight
+        self.reps = reps
     }
 }

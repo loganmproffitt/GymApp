@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import RealmSwift
 
 class WorkoutsViewModel: ObservableObject {
     
@@ -11,18 +12,25 @@ class WorkoutsViewModel: ObservableObject {
         self.yearMonth = yearMonth
     }
     
-    func addWorkout(date: Date) -> UUID {
-        // Populate new workout
-        var workout = Workout.default
+    func addWorkout(date: Date) -> ObjectId {
+
+        // Create a new workout
+        let workout = Workout()
         workout.rawDate = date
         workout.date = DateService.getFormattedDate(for: date)
         workout.name = DateService.getWeekday(for: date)
         
-        workouts.append(WorkoutViewModel(workout: workout))
+        // Add workout to realm
+        RealmService.shared.add(workout)
+
+        // Create and append the WorkoutViewModel
+        let workoutViewModel = WorkoutViewModel(workout: workout)
+        workouts.append(workoutViewModel)
+
         return workout.id
     }
     
-    func binding(for workoutID: UUID) -> Binding<WorkoutViewModel> {
+    func binding(for workoutID: ObjectId) -> Binding<WorkoutViewModel> {
         return Binding<WorkoutViewModel>(
             get: {
                 self.workouts.first { $0.id == workoutID } ?? WorkoutViewModel(workout: Workout.default)

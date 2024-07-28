@@ -1,5 +1,5 @@
 import Foundation
-import SwiftUI
+import RealmSwift
 
 class WorkoutViewModel: ObservableObject {
     
@@ -9,7 +9,7 @@ class WorkoutViewModel: ObservableObject {
         self.workout = workout
     }
     
-    var id: UUID {
+    var id: ObjectId {
         workout.id
     }
     
@@ -19,7 +19,9 @@ class WorkoutViewModel: ObservableObject {
             workout.name
         }
         set {
-            workout.name = newValue
+            RealmService.shared.update {
+                self.workout.name = newValue
+            }
         }
     }
     
@@ -29,7 +31,9 @@ class WorkoutViewModel: ObservableObject {
             workout.rawDate
         }
         set {
-            workout.rawDate = newValue
+            RealmService.shared.update {
+                self.workout.rawDate = newValue
+            }
         }
     }
     
@@ -39,7 +43,9 @@ class WorkoutViewModel: ObservableObject {
             workout.date
         }
         set {
-            workout.date = newValue
+            RealmService.shared.update {
+                self.workout.date = newValue
+            }
         }
     }
     
@@ -49,29 +55,37 @@ class WorkoutViewModel: ObservableObject {
             workout.notes
         }
         set {
-            workout.notes = newValue
+            RealmService.shared.update {
+                self.workout.notes = newValue
+            }
         }
     }
     
     // Get/set exercises
-    var exercises: [Exercise] {
+    var exercises: List<Exercise> {
         get {
             workout.exercises
         }
         set {
-            workout.exercises = newValue
+            RealmService.shared.update {
+                self.workout.exercises.removeAll()
+                self.workout.exercises.append(objectsIn: newValue)
+            }
         }
     }
     
     // Add exercise
     func addExercise(_ exercise: Exercise) {
-        workout.exercises.append(exercise)
+        RealmService.shared.update {
+            self.workout.exercises.append(exercise)
+        }
     }
     
     // Remove exercise
     func removeExercise(at index: Int) {
-        guard index < workout.exercises.count else { return }
-        workout.exercises.remove(at: index)
+        RealmService.shared.update {
+            guard index < self.workout.exercises.count else { return }
+            self.workout.exercises.remove(at: index)
+        }
     }
-
 }
