@@ -7,9 +7,15 @@ class WorkoutGroupsController: ObservableObject {
     
     @Published var viewModels: [ YearMonth: WorkoutListViewModel ] = [:]
     
+    func loadAllMonths() {
+        let yearMonths = WorkoutLoaderService().getYearMonthPairs()
+        for yearMonth in yearMonths {
+            loadMonth(yearMonth: yearMonth)
+        }
+    }
     
     func loadMonth(yearMonth: YearMonth) {
-        viewModels[yearMonth] = WorkoutListViewModel(workouts: WorkoutLoaderService().loadMonth(yearMonth: DateService.getYearMonth(for: Date())), yearMonth: yearMonth)
+        viewModels[yearMonth] = WorkoutListViewModel(workouts: WorkoutLoaderService().loadMonth(yearMonth: yearMonth), yearMonth: yearMonth)
     }
     
     func loadAllWorkouts() {

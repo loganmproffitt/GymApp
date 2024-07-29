@@ -19,7 +19,6 @@ class WorkoutLoaderService {
         return getWorkoutViewModels(workouts: workouts)
     }
     
-    
     // Helper to wrap each workout from an array in a WorkoutViewModel
     func getWorkoutViewModels(workouts: Array<Workout>) -> [WorkoutViewModel] {
         var viewModels: [WorkoutViewModel] = []
@@ -27,5 +26,26 @@ class WorkoutLoaderService {
             viewModels.append(WorkoutViewModel(workout: workout))
         }
         return viewModels
+    }
+    
+    func getYearMonthPairs() -> [YearMonth] {
+        let realm = RealmService.shared.getRealm()
+        let workouts = realm.objects(Workout.self)
+        
+        var yearMonthSet = Swift.Set<YearMonth>()
+        for workout in workouts {
+            yearMonthSet.insert(YearMonth(year: workout.year, month: workout.month))
+        }
+        
+        // Convert the set to an array and sort it
+        let sortedPairs = yearMonthSet.sorted {
+            if $0.year == $1.year {
+                return $0.month > $1.month
+            } else {
+                return $0.year > $1.year
+            }
+        }
+        
+        return sortedPairs
     }
 }

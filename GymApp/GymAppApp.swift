@@ -10,7 +10,7 @@ struct GymAppApp: App {
     }
     
     private func loadData() {
-        WorkoutGroupsController.shared.loadMonth(yearMonth: DateService.getYearMonth(for: Date()))
+        WorkoutGroupsController.shared.loadAllMonths()
     }
     
     var body: some Scene {
