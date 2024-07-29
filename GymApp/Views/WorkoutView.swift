@@ -31,7 +31,7 @@ struct WorkoutView: View {
                     }
                 Spacer() // Pushes the TextField to the left
                 
-                Text(workoutController.workout.date)
+                Text(workoutController.workout.formattedDate)
                     .font(.caption)
                     .foregroundColor(.gray)
                     .padding(.trailing)

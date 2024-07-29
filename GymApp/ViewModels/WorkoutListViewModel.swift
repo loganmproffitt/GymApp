@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import RealmSwift
 
-class WorkoutsViewModel: ObservableObject {
+class WorkoutListViewModel: ObservableObject {
     
     @Published var workouts: [WorkoutViewModel] = []
     @Published var yearMonth: YearMonth
@@ -23,7 +23,6 @@ class WorkoutsViewModel: ObservableObject {
         // Create a new workout
         let workout = Workout()
         workout.rawDate = date
-        workout.date = DateService.getFormattedDate(for: date)
         workout.name = DateService.getWeekday(for: date)
         
         // Add workout to realm

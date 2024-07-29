@@ -5,12 +5,16 @@ class WorkoutGroupsController: ObservableObject {
     
     static let shared = WorkoutGroupsController()
     
-    @Published var viewModels: [ YearMonth: WorkoutsViewModel ] = [:]
+    @Published var viewModels: [ YearMonth: WorkoutListViewModel ] = [:]
     
+    
+    func loadMonth(yearMonth: YearMonth) {
+        viewModels[yearMonth] = WorkoutListViewModel(workouts: WorkoutLoaderService().loadMonth(yearMonth: DateService.getYearMonth(for: Date())), yearMonth: yearMonth)
+    }
     
     func loadAllWorkouts() {
         let yearMonth = DateService.getYearMonth(for: Date())
-        viewModels[yearMonth] = WorkoutsViewModel(workouts: RealmService.shared.loadAllWorkouts(), yearMonth: yearMonth)
+        viewModels[yearMonth] = WorkoutListViewModel(workouts: WorkoutLoaderService().loadAllWorkouts(), yearMonth: yearMonth)
     }
     
     func addWorkout(providedDate: Date? = nil) -> ObjectId {
@@ -19,7 +23,7 @@ class WorkoutGroupsController: ObservableObject {
         return workoutID
     }
     
-    func getViewModel(for date: Date) -> WorkoutsViewModel {
+    func getViewModel(for date: Date) -> WorkoutListViewModel {
         // Get year and month from date
         let yearMonth = DateService.getYearMonth(for: date)
         
@@ -29,7 +33,7 @@ class WorkoutGroupsController: ObservableObject {
         }
         else {
             // If not found, create a new view model from the given year and month
-            let newViewModel = WorkoutsViewModel(workouts: [], yearMonth: yearMonth)
+            let newViewModel = WorkoutListViewModel(workouts: [], yearMonth: yearMonth)
             viewModels[yearMonth] = newViewModel
             return newViewModel
         }

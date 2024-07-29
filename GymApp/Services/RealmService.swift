@@ -5,10 +5,35 @@ class RealmService {
     
     static let shared = RealmService()
     private var realm: Realm
-    
+
     private init() {
-        realm = try! Realm()
+        let config = Realm.Configuration(
+            schemaVersion: 1, // Increment this whenever you make changes to your models
+            deleteRealmIfMigrationNeeded: true
+            /*
+            migrationBlock: { migration, oldSchemaVersion in
+                if oldSchemaVersion < 1 {
+                    // Migration block
+                    migration.enumerateObjects(ofType: Workout.className()) { oldObject, newObject in
+                        
+                    }
+                }
+                // Add more if statements as needed for future schema versions
+            }*/
+        )
+        
+        Realm.Configuration.defaultConfiguration = config
+        
+        do {
+            realm = try Realm()
+        } catch {
+            fatalError("Error initializing Realm: \(error.localizedDescription)")
+        }
     }
+    
+    func getRealm() -> Realm {
+            return realm
+        }
     
     // Write function
     func write(_ block: @escaping () -> Void) {
@@ -45,16 +70,4 @@ class RealmService {
         return realm.objects(objectType).filter(filter)
     }
     
-    // Loads all workouts
-    func loadAllWorkouts() -> [WorkoutViewModel] {
-        // Get workouts
-        let workouts = Array(realm.objects(Workout.self))
-        
-        // Create view models
-        var viewModels: [WorkoutViewModel] = []
-        for workout in workouts {
-            viewModels.append(WorkoutViewModel(workout: workout))
-        }
-        return viewModels
-    }
 }

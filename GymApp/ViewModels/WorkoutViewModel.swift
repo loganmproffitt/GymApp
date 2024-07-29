@@ -13,7 +13,6 @@ class WorkoutViewModel: ObservableObject {
         workout.id
     }
     
-    // Get/set name
     var name: String {
         get {
             workout.name
@@ -25,7 +24,6 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
-    // Get/set raw date
     var rawDate: Date {
         get {
             workout.rawDate
@@ -33,18 +31,6 @@ class WorkoutViewModel: ObservableObject {
         set {
             RealmService.shared.update {
                 self.workout.rawDate = newValue
-            }
-        }
-    }
-    
-    // Get/set date
-    var date: String {
-        get {
-            workout.date
-        }
-        set {
-            RealmService.shared.update {
-                self.workout.date = newValue
             }
         }
     }
@@ -88,4 +74,25 @@ class WorkoutViewModel: ObservableObject {
             self.workout.exercises.remove(at: index)
         }
     }
+    
+    
+    // Date info
+    
+    // Formatted date
+    var formattedDate: String {
+        return DateService.getFormattedDate(for: workout.rawDate)
+    }
+    
+    var year: Int {
+        return workout.year
+    }
+    
+    var month: Int {
+        return workout.month
+    }
+    
+    var yearMonth: YearMonth {
+        return YearMonth(year: year, month: month)
+    }
+    
 }

@@ -4,9 +4,9 @@ import SwiftUI
 class WorkoutController: ObservableObject {
     
     @Published var workout: WorkoutViewModel
-    var viewModel: WorkoutsViewModel
+    var viewModel: WorkoutListViewModel
     
-    init(workout: WorkoutViewModel, viewModel: WorkoutsViewModel) {
+    init(workout: WorkoutViewModel, viewModel: WorkoutListViewModel) {
         self.workout = workout
         self.viewModel = viewModel
     }

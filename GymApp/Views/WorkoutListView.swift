@@ -2,7 +2,7 @@ import SwiftUI
 
 struct WorkoutListView: View {
     
-    @ObservedObject var viewModel: WorkoutsViewModel
+    @ObservedObject var viewModel: WorkoutListViewModel
     
     var body: some View {
         List {
@@ -13,7 +13,7 @@ struct WorkoutListView: View {
                     HStack {
                         Text("\(viewModel.workouts[index].name)")
                         Spacer()
-                        Text("\(viewModel.workouts[index].date)")
+                        Text("\(viewModel.workouts[index].formattedDate)")
                     }
                     .padding()
                 }
