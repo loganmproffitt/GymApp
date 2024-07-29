@@ -1,5 +1,4 @@
 import Foundation
-import SwiftUI
 import RealmSwift
 
 class ExerciseViewModel: ObservableObject {
@@ -69,17 +68,18 @@ class ExerciseViewModel: ObservableObject {
         }
     }
     
-    var sets: [Set] {
-            get {
-                return Array(exercise.sets)
-            }
-            set {
-                RealmService.shared.update {
-                    self.exercise.sets.removeAll()
-                    self.exercise.sets.append(objectsIn: newValue)
-                }
-            }
+    var sets: List<Set> {
+        get {
+            exercise.sets
         }
+        set {
+            RealmService.shared.update {
+                self.exercise.sets.removeAll()
+                self.exercise.sets.append(objectsIn: newValue)
+            }
+            objectWillChange.send()
+        }
+    }
     
     // Toggle checkbox helper
     func toggleCheckbox() {
@@ -95,7 +95,7 @@ class ExerciseViewModel: ObservableObject {
         RealmService.shared.update {
             self.exercise.sets.append(newSet)
         }
-        //objectWillChange.send()
+        objectWillChange.send()
     }
     
     // Remove set helper
@@ -104,5 +104,6 @@ class ExerciseViewModel: ObservableObject {
             guard index < self.sets.count else { return }
             self.exercise.sets.remove(at: index)
         }
+        objectWillChange.send()
     }
 }
