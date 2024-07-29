@@ -49,10 +49,10 @@ struct WorkoutView: View {
                             exerciseViewModel: ExerciseViewModel(exercise: workoutController.workout.exercises[index]))
                     }
                     .onDelete { indexSet in
-                            if let index = indexSet.first {
-                                workoutController.deleteExercise(at: index)
-                            }
+                        if let index = indexSet.first {
+                            workoutController.deleteExercise(at: index)
                         }
+                    }
                     
                 
                     // New exercise button

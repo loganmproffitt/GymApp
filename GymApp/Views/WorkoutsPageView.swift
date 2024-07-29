@@ -2,7 +2,7 @@ import SwiftUI
 import RealmSwift
 
 struct WorkoutsPageView: View {
-    @ObservedObject var workoutsController = TimePeriodController.shared
+    @ObservedObject var workoutsController = WorkoutGroupsController.shared
     @State private var selectedWorkoutID: ObjectId? = nil
 
     var body: some View {
@@ -22,7 +22,7 @@ struct WorkoutsPageView: View {
                     .padding(.top) // Add padding at the top
                     
                     // List view models
-                    ViewModelsListView()
+                    WorkoutGroupsView()
                 }
                 
                 // Add workout button
@@ -58,19 +58,6 @@ struct WorkoutsPageView: View {
             }*/
         }
     }
-
-    /*
-    private func deleteWorkout(at offsets: IndexSet) {
-        // Ensure that the offsets are within the bounds of the workouts array
-        guard let indexToRemove = offsets.first, indexToRemove < viewModel.workouts.count else {
-            return
-        }
-        
-        let workout = viewModel.workouts[indexToRemove]
-        WorkoutService.shared.deleteWorkout(workout: workout, from: viewModel)
-        
-        selectedWorkoutID = nil
-    }*/
 }
 
 

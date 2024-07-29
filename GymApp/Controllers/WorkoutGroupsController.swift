@@ -1,11 +1,17 @@
 import Foundation
 import RealmSwift
 
-class TimePeriodController: ObservableObject {
+class WorkoutGroupsController: ObservableObject {
     
-    static let shared = TimePeriodController()
+    static let shared = WorkoutGroupsController()
     
     @Published var viewModels: [ YearMonth: WorkoutsViewModel ] = [:]
+    
+    
+    func loadAllWorkouts() {
+        let yearMonth = DateService.getYearMonth(for: Date())
+        viewModels[yearMonth] = WorkoutsViewModel(workouts: RealmService.shared.loadAllWorkouts(), yearMonth: yearMonth)
+    }
     
     func addWorkout(providedDate: Date? = nil) -> ObjectId {
         let date = providedDate ?? Date()

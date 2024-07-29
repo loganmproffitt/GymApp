@@ -3,7 +3,7 @@ import RealmSwift
 
 class WorkoutViewModel: ObservableObject {
     
-    @Published private var workout: Workout
+    @Published var workout: Workout
     
     init(workout: Workout) {
         self.workout = workout

@@ -7,9 +7,15 @@ class WorkoutsViewModel: ObservableObject {
     @Published var workouts: [WorkoutViewModel] = []
     @Published var yearMonth: YearMonth
     
-    init(workouts: [WorkoutViewModel], yearMonth: YearMonth) {
+    init(workouts: [WorkoutViewModel] = [], yearMonth: YearMonth = YearMonth(year: 2024, month: 1)) {
         self.workouts = workouts
         self.yearMonth = yearMonth
+    }
+    
+    private func loadWorkouts() {
+        let realm = try! Realm()
+        let results = realm.objects(Workout.self).filter("yearMonth == %@", yearMonth)
+        self.workouts = results.map { WorkoutViewModel(workout: $0) }
     }
     
     func addWorkout(date: Date) -> ObjectId {
@@ -26,8 +32,21 @@ class WorkoutsViewModel: ObservableObject {
         // Create and append the WorkoutViewModel
         let workoutViewModel = WorkoutViewModel(workout: workout)
         workouts.append(workoutViewModel)
+        
+        objectWillChange.send()
 
         return workout.id
+    }
+    
+    func removeWorkout(at index: Int) {
+        guard index < self.workouts.count else { return }
+        let workoutViewModel = self.workouts[index]
+        
+        // Remove from Realm
+        RealmService.shared.delete(workoutViewModel.workout)
+        
+        // Remove from local list
+        self.workouts.remove(at: index)
     }
     
     func binding(for workoutID: ObjectId) -> Binding<WorkoutViewModel> {

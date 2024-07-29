@@ -44,4 +44,17 @@ class RealmService {
     func fetch<T: Object>(_ objectType: T.Type, filter: String) -> Results<T> {
         return realm.objects(objectType).filter(filter)
     }
+    
+    // Loads all workouts
+    func loadAllWorkouts() -> [WorkoutViewModel] {
+        // Get workouts
+        let workouts = Array(realm.objects(Workout.self))
+        
+        // Create view models
+        var viewModels: [WorkoutViewModel] = []
+        for workout in workouts {
+            viewModels.append(WorkoutViewModel(workout: workout))
+        }
+        return viewModels
+    }
 }

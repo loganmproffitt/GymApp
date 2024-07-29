@@ -1,6 +1,6 @@
 import Foundation
 
-class WorkoutsController: ObservableObject {
+class WorkoutListController: ObservableObject {
     
     @Published var workouts: [WorkoutViewModel]
     
