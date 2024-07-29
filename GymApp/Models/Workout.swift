@@ -14,6 +14,7 @@ class Workout: Object, Identifiable {
     // Year and month fields to speed up searches
     @Persisted var year: Int = 0
     @Persisted var month: Int = 0
+    @Persisted var day: Int = 0
 
     static var `default`: Workout {
         let workout = Workout()
@@ -21,9 +22,7 @@ class Workout: Object, Identifiable {
         workout.rawDate = Date()
         workout.notes = ""
         workout.exercises.append(Exercise.default)
-        
-        workout.year = Calendar.current.component(.year, from: Date())
-        workout.month = Calendar.current.component(.month, from: Date())
+        workout.setDateValues(from: Date())
         
         return workout
     }
@@ -35,7 +34,13 @@ class Workout: Object, Identifiable {
         self.rawDate = rawDate
         self.notes = notes
         self.exercises.append(objectsIn: exercises)
-        self.year = Calendar.current.component(.year, from: rawDate)
-        self.month = Calendar.current.component(.month, from: rawDate)
+        self.setDateValues(from: rawDate)
     }
+    
+    private func setDateValues(from date: Date) {
+        year = Calendar.current.component(.year, from: date)
+        month = Calendar.current.component(.month, from: date)
+        day = Calendar.current.component(.day, from: date)
+    }
+    
 }

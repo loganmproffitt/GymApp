@@ -24,17 +24,6 @@ class WorkoutViewModel: ObservableObject {
         }
     }
     
-    var rawDate: Date {
-        get {
-            workout.rawDate
-        }
-        set {
-            RealmService.shared.update {
-                self.workout.rawDate = newValue
-            }
-        }
-    }
-    
     // Get/set notes
     var notes: String {
         get {
@@ -78,21 +67,41 @@ class WorkoutViewModel: ObservableObject {
     
     // Date info
     
+    var rawDate: Date {
+        get {
+            workout.rawDate
+        }
+        set {
+            RealmService.shared.update {
+                self.workout.rawDate = newValue
+            }
+        }
+    }
+    
+    var year: Int {
+        workout.year
+    }
+    
+    var month: Int {
+        workout.month
+    }
+    
+    var day: Int {
+        workout.day
+    }
+    
     // Formatted date
     var formattedDate: String {
         return DateService.getFormattedDate(for: workout.rawDate)
     }
     
-    var year: Int {
-        return workout.year
-    }
-    
-    var month: Int {
-        return workout.month
-    }
-    
+    // Get YearMonth structure
     var yearMonth: YearMonth {
-        return YearMonth(year: year, month: month)
+        YearMonth(year: year, month: month)
     }
     
+    // Get the weekday as a string
+    var weekDay: String {
+        DateService.getWeekday(for: workout.rawDate)
+    }
 }
