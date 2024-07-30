@@ -46,7 +46,7 @@ class WorkoutLoaderService {
                 return $0.year > $1.year
             }
         }
-        print(sortedPairs)
+
         return sortedPairs
     }
 }

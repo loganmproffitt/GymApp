@@ -7,10 +7,7 @@ struct NotesView: View {
     var body: some View {
         TextEditor(text: $exerciseViewModel.notes)
         .frame(height: 100)
-        .onChange (of: exerciseViewModel.notes) { oldValue, newValue in
-            exerciseViewModel.notes = newValue
-        }
-        .padding(2) // Optional, for internal padding within the TextEditor
+        //.padding(2)
         .background(Color(red: 0.15, green: 0.15, blue: 0.15))
         .cornerRadius(10)
         .frame(minWidth: 0, maxWidth: .infinity)

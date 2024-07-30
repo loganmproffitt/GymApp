@@ -42,19 +42,9 @@ struct ExerciseCardView: View {
                     }
                 
                 Spacer()
-
                 
-                // Set Count
-                TextField(setsValue, text: $setsValue)
-                    .onChange (of: setsValue) { oldValue, newValue in
-                        exerciseViewModel.setCount = newValue
-                    }
-                    .padding(.leading, 3)
-                    .frame(minWidth: 0, maxWidth: 300, alignment: .leading)
-                    .multilineTextAlignment(.trailing)
-                    .foregroundColor(.gray)
-                    .keyboardType(.decimalPad)
                 
+                // Display details button
                 HStack(spacing: -15) {
                     // Sets button
                     Button(action: {
@@ -78,21 +68,11 @@ struct ExerciseCardView: View {
                 ExerciseDetailView()
                     .environmentObject(exerciseViewModel)
             }
-        }/*
-        .onAppear {
-            if (exercise.setCountModified)
-            {
-                setsValue = exercise.setCount
-            }
-            else
-            {
-                setsValue = String(exercise.sets.count)
-            }
-        }*/
+        }
     }
 }
 
-/*
+
 struct ExerciseCardView_Previews: PreviewProvider {
     struct PreviewWrapper: View {
         @State private var exercise = Exercise(name: "Bench Press", completed: false, notes: "", setCount: "", setCountModified: false,
@@ -106,4 +86,4 @@ struct ExerciseCardView_Previews: PreviewProvider {
         PreviewWrapper()
     }
 }
-*/
+

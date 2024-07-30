@@ -11,31 +11,34 @@ struct ExerciseDetailView: View {
     var body: some View {
         
         // Sets with outline
-        VStack(spacing: -5) {
-            // Notes button
-            Button(action: {
-                withAnimation {
-                    //notesVisible.toggle()
-                }
-            }) {
-                HStack {
-                    Text("Notes")
-                        .font(.footnote)
-                    Image(systemName: "note.text")
-                }
-                .padding()
-            }
-            .contentShape(Rectangle())
-            .buttonStyle(BorderlessButtonStyle())
+        VStack() {//spacing: -5) {
             
+            // Notes label
+            HStack {
+                Text("Notes")
+                    .font(.footnote)
+                Image(systemName: "note.text")
+            }
+                .contentShape(Rectangle())
+                .buttonStyle(BorderlessButtonStyle())
             
             // Notes section
-            if (notesVisible)
-            {
-                NotesView()
-                .environmentObject(exerciseViewModel)
+            NotesView()
+            .environmentObject(exerciseViewModel)
+            .padding([.top, .bottom])
+ 
+            // Sets label
+            HStack {
+                Text("Sets")
+                    .font(.footnote)
+                Image(systemName: "list.bullet")
             }
+                .padding(.top, 0.8)
+                .contentShape(Rectangle())
+                .buttonStyle(BorderlessButtonStyle())
             
+            Divider()
+            .padding(.top)
             
             // Display sets
             ForEach(exerciseViewModel.exercise.sets.indices, id: \.self) { index in
@@ -56,6 +59,8 @@ struct ExerciseDetailView: View {
                     }
                     .padding(.trailing)
                 }
+                .contentShape(Rectangle())
+                .buttonStyle(BorderlessButtonStyle())
             }
             
             // Add set button

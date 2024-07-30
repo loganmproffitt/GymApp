@@ -3,7 +3,6 @@ import SwiftUI
 struct SetDetailView: View {
     
     @ObservedObject var setViewModel: SetViewModel
-    @FocusState private var isTextFieldFocused: Bool
 
     var body: some View {
         HStack(spacing: 0) {
@@ -12,9 +11,6 @@ struct SetDetailView: View {
                 .multilineTextAlignment(.trailing)
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding()
-                .onChange (of: setViewModel.weight) { oldValue, newValue in
-                    setViewModel.weight = newValue
-                }
             
             Text("x")
                 .font(.footnote)
@@ -25,9 +21,7 @@ struct SetDetailView: View {
                 .multilineTextAlignment(.leading)
                 .textFieldStyle(PlainTextFieldStyle())
                 .padding()
-                .onChange (of: setViewModel.reps) { oldValue, newValue in
-                    setViewModel.reps = newValue
-                }
+
             }
         }
     }
