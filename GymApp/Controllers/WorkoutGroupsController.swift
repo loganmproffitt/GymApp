@@ -10,6 +10,7 @@ class WorkoutGroupsController: ObservableObject {
     func loadAllMonths() {
         let yearMonths = WorkoutLoaderService().getYearMonthPairs()
         for yearMonth in yearMonths {
+            print(yearMonth.month)
             loadMonth(yearMonth: yearMonth)
         }
     }

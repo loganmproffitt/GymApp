@@ -2,15 +2,14 @@ import SwiftUI
 
 struct WorkoutView: View {
     
-    @ObservedObject private var workoutController: WorkoutController
-    
-    init(controller: WorkoutController) {
-        self.workoutController = controller
-
-    }
+    @ObservedObject private var workoutViewModel: WorkoutViewModel
     
     @State private var newExerciseName: String = ""
     @FocusState private var isTextFieldFocused: Bool
+    
+    init(workoutViewModel: WorkoutViewModel) {
+        self.workoutViewModel = workoutViewModel
+    }
 
     var body: some View {
         // Exercise vertical stack
@@ -18,20 +17,24 @@ struct WorkoutView: View {
             
             // Workout name and date
             HStack {
-                TextField(workoutController.workout.name, text: $workoutController.workout.name)//, onCommit: viewModel.saveWorkouts)
+                TextField(workoutViewModel.name, text: $workoutViewModel.name)//, onCommit: viewModel.saveWorkouts)
                     .font(.title)
                     .padding(.leading)
                     .onDisappear {
                         //viewModel.saveWorkouts()
                     }
+                    .onChange(of: workoutViewModel.name) { oldValue, newValue in
+                        workoutViewModel.name = newValue
+                    }
+                /*
                     .onChange(of: isTextFieldFocused) { oldValue, isFocused in
                         if !isFocused {
                             //viewModel.saveWorkouts()
                         }
-                    }
+                    }*/
                 Spacer() // Pushes the TextField to the left
                 
-                Text(workoutController.workout.formattedDate)
+                Text(workoutViewModel.formattedDate)
                     .font(.caption)
                     .foregroundColor(.gray)
                     .padding(.trailing)
@@ -44,20 +47,20 @@ struct WorkoutView: View {
                 Section(header: Text("Exercises").font(.caption).foregroundColor(.gray)) {
                     
                     // List exercises
-                    ForEach(workoutController.workout.exercises.indices, id: \.self) { index in
+                    ForEach(workoutViewModel.exercises.indices, id: \.self) { index in
                         ExerciseCardView(
-                            exerciseViewModel: ExerciseViewModel(exercise: workoutController.workout.exercises[index]))
+                            exerciseViewModel: ExerciseViewModel(exercise: workoutViewModel.exercises[index]))
                     }
                     .onDelete { indexSet in
                         if let index = indexSet.first {
-                            workoutController.deleteExercise(at: index)
+                            workoutViewModel.removeExercise(at: index)
                         }
                     }
                     
                 
                     // New exercise button
                     HStack {
-                        Button(action: workoutController.addExercise) {
+                        Button(action: workoutViewModel.addExercise) {
                             HStack {
                                 Image(systemName: "plus.circle.fill")
                             }
@@ -75,10 +78,6 @@ struct WorkoutView: View {
                 }
             }
         }
-    }
-    
-    private func deleteExercise(at index: Int) {
-        workoutController.deleteExercise(at: index)
     }
 }
 

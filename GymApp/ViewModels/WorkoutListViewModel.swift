@@ -21,9 +21,7 @@ class WorkoutListViewModel: ObservableObject {
     func addWorkout(date: Date) -> ObjectId {
 
         // Create a new workout
-        let workout = Workout()
-        workout.rawDate = date
-        workout.name = DateService.getWeekday(for: date)
+        let workout = Workout(name: DateService.getWeekday(for: date), rawDate: date, notes: "", exercises: [])
         
         // Add workout to realm
         RealmService.shared.add(workout)

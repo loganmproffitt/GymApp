@@ -38,9 +38,10 @@ class Workout: Object, Identifiable {
     }
     
     private func setDateValues(from date: Date) {
-        year = Calendar.current.component(.year, from: date)
-        month = Calendar.current.component(.month, from: date)
-        day = Calendar.current.component(.day, from: date)
+        let calendar = Calendar.current
+        self.year = calendar.component(.year, from: date)
+        self.month = calendar.component(.month, from: date)
+        self.day = calendar.component(.day, from: date)
     }
     
 }

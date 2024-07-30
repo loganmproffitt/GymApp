@@ -5,30 +5,37 @@ struct WorkoutListView: View {
     @ObservedObject var viewModel: WorkoutListViewModel
     
     var body: some View {
+        
         List {
-            // Display workouts
-            ForEach(viewModel.workouts.indices, id: \.self) { index in
-                NavigationLink(destination:
-                    WorkoutView(controller: WorkoutController(workout: viewModel.workouts[index], viewModel: viewModel))) {
-                    HStack {
-                        Text("\(viewModel.workouts[index].name)")
-                        Spacer()
-                        Text("\(viewModel.workouts[index].formattedDate)")
+            Section(header: Text("\(DateService.getMonthName(for: viewModel.yearMonth.month))").font(.title2).bold()
+                .padding([.top, .leading]))
+            {
+                // Display workouts
+                ForEach(viewModel.workouts.indices, id: \.self) { index in
+                    NavigationLink(destination:
+                                    WorkoutView(workoutViewModel: viewModel.workouts[index])) {
+                        HStack {
+                            Text("\(viewModel.workouts[index].name)")
+                            Spacer()
+                            Text("\(viewModel.workouts[index].formattedDate)")
+                        }
+                        .padding()
                     }
-                    .padding()
                 }
-            }
-            .onDelete { indexSet in
-                if let index = indexSet.first {
-                    viewModel.removeWorkout(at: index)
+                .onDelete { indexSet in
+                    withAnimation {
+                        if let index = indexSet.first {
+                            viewModel.removeWorkout(at: index)
+                        }
+                    }
                 }
             }
         }
     }
-}
-
-struct WorkoutListView_Previews: PreviewProvider {
-    static var previews: some View {
-        WorkoutsPageView()
+    
+    struct WorkoutListView_Previews: PreviewProvider {
+        static var previews: some View {
+            WorkoutsPageView()
+        }
     }
 }

@@ -31,6 +31,7 @@ class WorkoutLoaderService {
     func getYearMonthPairs() -> [YearMonth] {
         let realm = RealmService.shared.getRealm()
         let workouts = realm.objects(Workout.self)
+        print(workouts)
         
         var yearMonthSet = Swift.Set<YearMonth>()
         for workout in workouts {
@@ -45,7 +46,7 @@ class WorkoutLoaderService {
                 return $0.year > $1.year
             }
         }
-        
+        print(sortedPairs)
         return sortedPairs
     }
 }

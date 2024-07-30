@@ -50,9 +50,9 @@ class WorkoutViewModel: ObservableObject {
     }
     
     // Add exercise
-    func addExercise(_ exercise: Exercise) {
+    func addExercise() {
         RealmService.shared.update {
-            self.workout.exercises.append(exercise)
+            self.workout.exercises.append(Exercise.default)
         }
     }
     
