@@ -1,7 +1,7 @@
 import Foundation
 import RealmSwift
 
-class WorkoutViewModel: ObservableObject {
+class WorkoutViewModel: ObservableObject, Identifiable {
     
     @Published var workout: Workout
     
@@ -21,6 +21,7 @@ class WorkoutViewModel: ObservableObject {
             RealmService.shared.update {
                 self.workout.name = newValue
             }
+            print("Updated name to \(workout.name)")
         }
     }
     
@@ -54,6 +55,7 @@ class WorkoutViewModel: ObservableObject {
         RealmService.shared.update {
             self.workout.exercises.append(Exercise.default)
         }
+        objectWillChange.send()
     }
     
     // Remove exercise
@@ -104,4 +106,5 @@ class WorkoutViewModel: ObservableObject {
     var weekDay: String {
         DateService.getWeekday(for: workout.rawDate)
     }
+
 }

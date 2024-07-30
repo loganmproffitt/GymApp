@@ -1,7 +1,7 @@
 import Foundation
 import RealmSwift
 
-class ExerciseViewModel: ObservableObject {
+class ExerciseViewModel: ObservableObject, Identifiable {
     
     @Published var exercise: Exercise
     

@@ -2,13 +2,10 @@ import SwiftUI
 
 struct WorkoutView: View {
     
-    @ObservedObject private var workoutViewModel: WorkoutViewModel
+    @Binding private var workoutViewModel: WorkoutViewModel
     
-    @State private var newExerciseName: String = ""
-    @FocusState private var isTextFieldFocused: Bool
-    
-    init(workoutViewModel: WorkoutViewModel) {
-        self.workoutViewModel = workoutViewModel
+    init(workoutViewModel: Binding<WorkoutViewModel>) {
+        self._workoutViewModel = workoutViewModel
     }
 
     var body: some View {
@@ -17,21 +14,12 @@ struct WorkoutView: View {
             
             // Workout name and date
             HStack {
-                TextField(workoutViewModel.name, text: $workoutViewModel.name)//, onCommit: viewModel.saveWorkouts)
+                TextField(workoutViewModel.name, text: $workoutViewModel.name)
                     .font(.title)
                     .padding(.leading)
-                    .onDisappear {
-                        //viewModel.saveWorkouts()
-                    }
                     .onChange(of: workoutViewModel.name) { oldValue, newValue in
-                        workoutViewModel.name = newValue
+                        //workoutViewModel.name = newValue
                     }
-                /*
-                    .onChange(of: isTextFieldFocused) { oldValue, isFocused in
-                        if !isFocused {
-                            //viewModel.saveWorkouts()
-                        }
-                    }*/
                 Spacer() // Pushes the TextField to the left
                 
                 Text(workoutViewModel.formattedDate)
@@ -68,15 +56,8 @@ struct WorkoutView: View {
                         Text("Add Exercise")
                     }
                 }
-                
-                
             }
             .scrollDismissesKeyboard(.interactively)
-            .onChange(of: isTextFieldFocused) { oldValue, newValue in
-                if !newValue {
-                    //viewModel.saveWorkouts()
-                }
-            }
         }
     }
 }

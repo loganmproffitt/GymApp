@@ -8,6 +8,10 @@ struct ExerciseCardView: View {
     @State private var notesVisible = false
     @State private var setsValue = ""
     
+    init(exerciseViewModel: ExerciseViewModel) {
+        self.exerciseViewModel = exerciseViewModel
+    }
+    
     //@ObservedObject var viewModel = WorkoutViewModel.shared
     @FocusState private var isTextFieldFocused: Bool
     
@@ -88,6 +92,7 @@ struct ExerciseCardView: View {
     }
 }
 
+/*
 struct ExerciseCardView_Previews: PreviewProvider {
     struct PreviewWrapper: View {
         @State private var exercise = Exercise(name: "Bench Press", completed: false, notes: "", setCount: "", setCountModified: false,
@@ -101,3 +106,4 @@ struct ExerciseCardView_Previews: PreviewProvider {
         PreviewWrapper()
     }
 }
+*/
