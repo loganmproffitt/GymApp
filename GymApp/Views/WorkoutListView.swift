@@ -25,6 +25,7 @@ struct WorkoutListView: View {
                 }
             }
         }
+        //.scrollDisabled(true)
     }
     
     struct WorkoutListView_Previews: PreviewProvider {
