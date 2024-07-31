@@ -6,7 +6,7 @@ struct WorkoutGroupsView: View {
     
     var body: some View {
             ForEach(Array(controller.viewModels.keys), id: \.self) { yearMonth in
-                if let viewModel = controller.viewModels[yearMonth] {
+                if let viewModel = controller.viewModels[yearMonth], !viewModel.workouts.isEmpty {
                     WorkoutListView(viewModel: viewModel)
                 }
             }

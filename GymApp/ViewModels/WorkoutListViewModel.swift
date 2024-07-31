@@ -44,6 +44,12 @@ class WorkoutListViewModel: ObservableObject {
         
         // Remove from local list
         self.workouts.remove(at: index)
+        
+        // Check if empty
+        if workouts.isEmpty {
+            // If empty, remove month from groups
+            WorkoutGroupsController.shared.removeMonth(for: yearMonth)
+        }
     }
     
     func binding(for workoutID: ObjectId) -> Binding<WorkoutViewModel> {

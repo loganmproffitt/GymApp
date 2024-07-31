@@ -45,4 +45,8 @@ class WorkoutGroupsController: ObservableObject {
             return newViewModel
         }
     }
+    
+    func removeMonth(for yearMonth: YearMonth) {
+        viewModels.removeValue(forKey: yearMonth)
+    }
 }
