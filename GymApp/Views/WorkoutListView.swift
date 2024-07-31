@@ -13,16 +13,8 @@ struct WorkoutListView: View {
             {
                 // Display workouts
                 ForEach(viewModel.workouts.indices, id: \.self) { index in
-                    NavigationLink(destination:
-                       // WorkoutView(workoutViewModel: workoutViewModel)) {
-                                   WorkoutView(workoutViewModel: viewModel.binding(for: viewModel.workouts[index].id))) {
-                        HStack {
-                            Text(viewModel.workouts[index].name)
-                            Spacer()
-                            Text("\(viewModel.workouts[index].formattedDate)")
-                        }
-                        .padding()
-                    }
+                    WorkoutCardView()
+                        .environmentObject(viewModel.workouts[index])
                 }
                 .onDelete { indexSet in
                     withAnimation {

@@ -31,8 +31,9 @@ struct WorkoutsPageView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            selectedWorkoutID = workoutsController.addWorkout(providedDate: Date())
-                        }) {
+                            withAnimation {
+                                selectedWorkoutID = workoutsController.addWorkout(providedDate: Date())
+                        }}) {
                                 Image(systemName: "plus.circle.fill")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)

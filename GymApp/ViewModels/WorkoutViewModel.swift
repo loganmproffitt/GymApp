@@ -3,10 +3,17 @@ import RealmSwift
 
 class WorkoutViewModel: ObservableObject, Identifiable {
     
+    @Published private var _name: String
+    @Published private var _notes: String
+    @Published private var _exercises: List<Exercise>
+    
     @Published var workout: Workout
     
     init(workout: Workout) {
         self.workout = workout
+        self._name = workout.name
+        self._notes = workout.notes
+        self._exercises = workout.exercises
     }
     
     var id: ObjectId {
@@ -15,34 +22,34 @@ class WorkoutViewModel: ObservableObject, Identifiable {
     
     var name: String {
         get {
-            workout.name
+            _name
         }
         set {
+            _name = newValue
             RealmService.shared.update {
                 self.workout.name = newValue
             }
-            print("Updated name to \(workout.name)")
         }
     }
     
-    // Get/set notes
     var notes: String {
         get {
-            workout.notes
+            _notes
         }
         set {
+            _notes = newValue
             RealmService.shared.update {
                 self.workout.notes = newValue
             }
         }
     }
     
-    // Get/set exercises
     var exercises: List<Exercise> {
         get {
-            workout.exercises
+            _exercises
         }
         set {
+            _exercises = newValue
             RealmService.shared.update {
                 self.workout.exercises.removeAll()
                 self.workout.exercises.append(objectsIn: newValue)
@@ -55,7 +62,8 @@ class WorkoutViewModel: ObservableObject, Identifiable {
         RealmService.shared.update {
             self.workout.exercises.append(Exercise.default)
         }
-        objectWillChange.send()
+        // Sync private variable with the updated workout
+        _exercises = workout.exercises
     }
     
     // Remove exercise
@@ -64,11 +72,11 @@ class WorkoutViewModel: ObservableObject, Identifiable {
             guard index < self.workout.exercises.count else { return }
             self.workout.exercises.remove(at: index)
         }
+        // Sync private variable with the updated workout
+        _exercises = workout.exercises
     }
     
-    
     // Date info
-    
     var rawDate: Date {
         get {
             workout.rawDate

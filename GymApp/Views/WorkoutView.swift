@@ -2,15 +2,12 @@ import SwiftUI
 
 struct WorkoutView: View {
     
-    @Binding private var workoutViewModel: WorkoutViewModel
-    
-    init(workoutViewModel: Binding<WorkoutViewModel>) {
-        self._workoutViewModel = workoutViewModel
-    }
+    @EnvironmentObject var workoutViewModel: WorkoutViewModel
 
     var body: some View {
+        
         // Exercise vertical stack
-        VStack(spacing: 5) {
+        VStack(spacing: -5) {
             
             // Workout name and date
             HStack {
@@ -41,23 +38,51 @@ struct WorkoutView: View {
                     }
                     .onDelete { indexSet in
                         if let index = indexSet.first {
-                            workoutViewModel.removeExercise(at: index)
+                            withAnimation {
+                                workoutViewModel.removeExercise(at: index)
+                            }
                         }
                     }
                     
-                
-                    // New exercise button
-                    HStack {
-                        Button(action: workoutViewModel.addExercise) {
-                            HStack {
-                                Image(systemName: "plus.circle.fill")
-                            }
-                        }
-                        Text("Add Exercise")
-                    }
+                    /*
+                     // New exercise button
+                     HStack {
+                     Button(action: {
+                     withAnimation {
+                     workoutViewModel.addExercise()
+                     }
+                     }) {
+                     HStack {
+                     Image(systemName: "plus.circle.fill")
+                     }
+                     }
+                     Text("Add Exercise")
+                     }*/
+                    
+                    
                 }
             }
             .scrollDismissesKeyboard(.interactively)
+            
+            Spacer()
+            
+            // Add exercise button
+            HStack {
+                Spacer()
+                Button(action: {
+                    withAnimation {
+                        workoutViewModel.addExercise()
+                    }
+                }) {
+                    Image(systemName: "plus.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 48, height: 48)
+                        .foregroundColor(.blue)
+                        .padding()
+                }
+                .padding()
+            }
         }
     }
 }
