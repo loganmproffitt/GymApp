@@ -24,7 +24,10 @@ struct WorkoutsPageView: View {
                     .padding(.top) // Add padding at the top
                     
                     // List view models
-                    WorkoutGroupsView()
+                    List {
+                        WorkoutGroupsView()
+                    }
+                    .scrollDismissesKeyboard(.interactively)
                 }
                 
                 
