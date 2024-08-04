@@ -5,7 +5,7 @@ struct WorkoutGroupsView: View {
     @ObservedObject var controller = WorkoutGroupsController.shared
     
     var body: some View {
-            ForEach(Array(controller.viewModels.keys), id: \.self) { yearMonth in
+            ForEach(controller.keys, id: \.self) { yearMonth in
                 if let viewModel = controller.viewModels[yearMonth], !viewModel.workouts.isEmpty {
                     WorkoutListView(viewModel: viewModel)
                 }

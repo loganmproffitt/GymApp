@@ -10,12 +10,21 @@ class WorkoutListViewModel: ObservableObject {
     init(workouts: [WorkoutViewModel] = [], yearMonth: YearMonth = YearMonth(year: 2024, month: 1)) {
         self.workouts = workouts
         self.yearMonth = yearMonth
+        
+        // Sort loaded workouts
+        sortWorkouts()
     }
     
     private func loadWorkouts() {
         let realm = try! Realm()
         let results = realm.objects(Workout.self).filter("yearMonth == %@", yearMonth)
         self.workouts = results.map { WorkoutViewModel(workout: $0) }
+    }
+    
+    // Sorts workouts in descending order by day
+    func sortWorkouts() {
+        let sortedWorkouts = workouts.sorted(by: { $0.day > $1.day })
+        workouts = sortedWorkouts
     }
     
     func addWorkout(date: Date) -> ObjectId {
@@ -29,6 +38,9 @@ class WorkoutListViewModel: ObservableObject {
         // Create and append the WorkoutViewModel
         let workoutViewModel = WorkoutViewModel(workout: workout)
         workouts.append(workoutViewModel)
+        
+        // Re-sort workouts
+        sortWorkouts()
         
         objectWillChange.send()
 
@@ -44,6 +56,9 @@ class WorkoutListViewModel: ObservableObject {
         
         // Remove from local list
         self.workouts.remove(at: index)
+        
+        // Re-sort workouts
+        sortWorkouts()
         
         // Check if empty
         if workouts.isEmpty {

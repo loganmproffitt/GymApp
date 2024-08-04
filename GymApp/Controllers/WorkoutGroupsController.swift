@@ -4,12 +4,18 @@ import RealmSwift
 class WorkoutGroupsController: ObservableObject {
     
     static let shared = WorkoutGroupsController()
+
     
     @Published var viewModels: [ YearMonth: WorkoutListViewModel ] = [:]
+    @Published var keys: [YearMonth] = []
     
     func loadAllMonths() {
-        let yearMonths = WorkoutLoaderService().getYearMonthPairs()
-        for yearMonth in yearMonths {
+        // Get and sort keys
+        keys = WorkoutLoaderService().getStoredYearMonths()
+        sortKeys()
+        
+        // Load months
+        for yearMonth in keys {
             print(yearMonth.month)
             loadMonth(yearMonth: yearMonth)
         }
@@ -26,27 +32,51 @@ class WorkoutGroupsController: ObservableObject {
     
     func addWorkout(providedDate: Date? = nil) -> ObjectId {
         let date = providedDate ?? Date()
-        let workoutID = getViewModel(for: date).addWorkout(date: date)
+        let workoutID = getWorkoutListViewModel(for: date).addWorkout(date: date)
+        // Resort the given month
         return workoutID
     }
     
-    func getViewModel(for date: Date) -> WorkoutListViewModel {
+    func getWorkoutListViewModel(for date: Date) -> WorkoutListViewModel {
         // Get year and month from date
         let yearMonth = DateService.getYearMonth(for: date)
         
         // Check for existing view model
         if let viewModel = viewModels[yearMonth] {
-            return  viewModel
+            return viewModel
         }
         else {
             // If not found, create a new view model from the given year and month
             let newViewModel = WorkoutListViewModel(workouts: [], yearMonth: yearMonth)
             viewModels[yearMonth] = newViewModel
+            
+            // Add new key and re-sort
+            keys.append(yearMonth)
+            sortKeys()
+            
             return newViewModel
         }
     }
     
     func removeMonth(for yearMonth: YearMonth) {
+        // Remove view model
         viewModels.removeValue(forKey: yearMonth)
+        
+        // Remove key from key list and sort
+        if let index = keys.firstIndex(where: { $0 == yearMonth }) {
+            keys.remove(at: index)
+            sortKeys()
+        }
+    }
+    
+    func sortKeys() {
+        keys = keys.sorted(by: {
+            if $0.year == $1.year {
+                return $0.month > $1.month
+            }
+            else {
+                return $0.year > $1.year
+            }
+        })
     }
 }

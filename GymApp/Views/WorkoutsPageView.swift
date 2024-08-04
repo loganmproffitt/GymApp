@@ -37,8 +37,11 @@ struct WorkoutsPageView: View {
                     // Add workout button (current date)
                     Button(action: {
                         withAnimation {
+                            // Add workout and get the new id
                             selectedWorkoutID = workoutsController.addWorkout(providedDate: date)
+                            // Reset date to current date
                             date = Date()
+                            
                     }}) {
                         Image(systemName: "plus.circle.fill")
                             .resizable()

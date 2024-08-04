@@ -16,7 +16,8 @@ class WorkoutLoaderService {
     func loadMonth(yearMonth: YearMonth) -> [WorkoutViewModel] {
         let realm = RealmService.shared.getRealm()
         let workouts = Array(realm.objects(Workout.self).filter("year == %@ AND month == %@", yearMonth.year, yearMonth.month))
-        return getWorkoutViewModels(workouts: workouts)
+        let workoutViewModels = getWorkoutViewModels(workouts: workouts)
+        return workoutViewModels
     }
     
     // Helper to wrap each workout from an array in a WorkoutViewModel
@@ -28,7 +29,7 @@ class WorkoutLoaderService {
         return viewModels
     }
     
-    func getYearMonthPairs() -> [YearMonth] {
+    func getStoredYearMonths() -> [YearMonth] {
         let realm = RealmService.shared.getRealm()
         let workouts = realm.objects(Workout.self)
         print(workouts)
