@@ -6,6 +6,7 @@ class WorkoutViewModel: ObservableObject, Identifiable {
     @Published private var _name: String
     @Published private var _notes: String
     @Published private var _exercises: List<Exercise>
+    @Published private var _isTemplate: Bool
     
     @Published var workout: Workout
     
@@ -14,6 +15,7 @@ class WorkoutViewModel: ObservableObject, Identifiable {
         self._name = workout.name
         self._notes = workout.notes
         self._exercises = workout.exercises
+        self._isTemplate = workout.isTemplate
     }
     
     var id: ObjectId {
@@ -40,6 +42,18 @@ class WorkoutViewModel: ObservableObject, Identifiable {
             _notes = newValue
             RealmService.shared.update {
                 self.workout.notes = newValue
+            }
+        }
+    }
+    
+    var isTemplate: Bool {
+        get {
+            _isTemplate
+        }
+        set {
+            _isTemplate = newValue
+            RealmService.shared.update {
+                self.workout.isTemplate = newValue
             }
         }
     }

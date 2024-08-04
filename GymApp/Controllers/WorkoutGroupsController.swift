@@ -29,10 +29,9 @@ class WorkoutGroupsController: ObservableObject {
         viewModels[yearMonth] = WorkoutListViewModel(workouts: WorkoutLoaderService().loadAllWorkouts(), yearMonth: yearMonth)
     }
     
-    func addWorkout(providedDate: Date? = nil) -> ObjectId {
-        let date = providedDate ?? Date()
-        let workoutID = getWorkoutListViewModel(for: date).addWorkout(date: date)
-        // Resort the given month
+    func addWorkout(workout: Workout) -> ObjectId {
+        let workoutID = getWorkoutListViewModel(for: workout.rawDate).addWorkout(workout: workout)
+        
         return workoutID
     }
     

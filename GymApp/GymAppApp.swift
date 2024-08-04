@@ -11,6 +11,7 @@ struct GymAppApp: App {
     
     private func loadData() {
         WorkoutGroupsController.shared.loadAllMonths()
+        TemplateController.shared.loadTemplates()
     }
     
     var body: some Scene {

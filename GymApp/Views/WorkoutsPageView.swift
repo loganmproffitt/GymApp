@@ -34,11 +34,13 @@ struct WorkoutsPageView: View {
                     .shadow(radius: 10)
                     .transition(.slide)
                     .padding(.trailing)
-                    // Add workout button (current date)
+                    
+                    
+                    // Add workout button
                     Button(action: {
                         withAnimation {
                             // Add workout and get the new id
-                            selectedWorkoutID = workoutsController.addWorkout(providedDate: date)
+                            selectedWorkoutID = workoutsController.addWorkout(workout: Workout(rawDate: date))
                             // Reset date to current date
                             date = Date()
                             

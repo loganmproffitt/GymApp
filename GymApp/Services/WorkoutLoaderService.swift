@@ -15,7 +15,7 @@ class WorkoutLoaderService {
     // Loads the workouts from a specific year and month
     func loadMonth(yearMonth: YearMonth) -> [WorkoutViewModel] {
         let realm = RealmService.shared.getRealm()
-        let workouts = Array(realm.objects(Workout.self).filter("year == %@ AND month == %@", yearMonth.year, yearMonth.month))
+        let workouts = Array(realm.objects(Workout.self).filter("year == %@ AND month == %@ AND isTemplate == false", yearMonth.year, yearMonth.month))
         let workoutViewModels = getWorkoutViewModels(workouts: workouts)
         return workoutViewModels
     }
