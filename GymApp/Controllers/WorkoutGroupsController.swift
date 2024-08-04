@@ -16,7 +16,6 @@ class WorkoutGroupsController: ObservableObject {
         
         // Load months
         for yearMonth in keys {
-            print(yearMonth.month)
             loadMonth(yearMonth: yearMonth)
         }
     }
