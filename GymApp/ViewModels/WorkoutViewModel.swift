@@ -129,4 +129,15 @@ class WorkoutViewModel: ObservableObject, Identifiable {
         DateService.getWeekday(for: workout.rawDate)
     }
 
+    func setDateValues(date: Date) {
+        workout.setDateValues(from: date)
+    }
+    
+    func reset() {
+        self.workout = Workout.default
+        self._name = workout.name
+        self._notes = workout.notes
+        self._exercises = workout.exercises
+        self._isTemplate = workout.isTemplate
+    }
 }

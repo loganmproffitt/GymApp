@@ -10,13 +10,21 @@ struct WorkoutListView: View {
         
         Section(header:
             HStack {
+                
+                // Month text
                 Text("\(DateService.getMonthName(for: viewModel.yearMonth.month))")
                     .font(.title2)
                     .bold()
-                    .padding([.top, .leading])
-                    //.foregroundColor(.primary)
-                Spacer()
+                    .padding([.top, .leading, .trailing])
+           
+                // Year text
+                Text("\(String(viewModel.yearMonth.year))")
+                .font(.headline)
+                    .bold()
+                    .padding([.top, .trailing])
                 
+                Spacer()
+            
                 // Button for hiding month
                 Button(action: {
                     withAnimation {
@@ -44,6 +52,7 @@ struct WorkoutListView: View {
                     }
                 }
             }
+            
         }
     }
     

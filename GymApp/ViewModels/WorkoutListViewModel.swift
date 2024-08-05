@@ -27,13 +27,12 @@ class WorkoutListViewModel: ObservableObject {
         workouts = sortedWorkouts
     }
     
-    func addWorkout(workout: Workout) -> ObjectId {
+    func addWorkout(workoutViewModel: WorkoutViewModel) -> ObjectId {
 
         // Add workout to realm
-        RealmService.shared.add(workout)
+        RealmService.shared.add(workoutViewModel.workout)
 
-        // Create and append the WorkoutViewModel
-        let workoutViewModel = WorkoutViewModel(workout: workout)
+        // Append the new workout view model to the list
         workouts.append(workoutViewModel)
         
         // Re-sort workouts
@@ -41,7 +40,7 @@ class WorkoutListViewModel: ObservableObject {
         
         objectWillChange.send()
 
-        return workout.id
+        return workoutViewModel.id
     }
     
     func removeWorkout(at index: Int) {

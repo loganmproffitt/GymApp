@@ -71,7 +71,7 @@ class Workout: Object, Identifiable {
         self.setDateValues(from: rawDate)
     }
     
-    private func setDateValues(from date: Date) {
+    func setDateValues(from date: Date) {
         let calendar = Calendar.current
         self.rawDate = date
         self.year = calendar.component(.year, from: date)

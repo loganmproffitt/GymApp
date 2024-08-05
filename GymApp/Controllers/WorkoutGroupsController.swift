@@ -4,7 +4,9 @@ import RealmSwift
 class WorkoutGroupsController: ObservableObject {
     
     static let shared = WorkoutGroupsController()
-
+    
+    // Store a blank workout for adding. Allows resetting after adding so that a different workout is created each time
+    @Published var newWorkout = WorkoutViewModel(workout: Workout.default)
     
     @Published var viewModels: [ YearMonth: WorkoutListViewModel ] = [:]
     @Published var keys: [YearMonth] = []
@@ -29,12 +31,14 @@ class WorkoutGroupsController: ObservableObject {
         viewModels[yearMonth] = WorkoutListViewModel(workouts: WorkoutLoaderService().loadAllWorkouts(), yearMonth: yearMonth)
     }
     
-    func addWorkout(workout: Workout) -> ObjectId {
-        let workoutID = getWorkoutListViewModel(for: workout.rawDate).addWorkout(workout: workout)
-        
+    // Takes a workout view model and adds it to the correct workout list
+    func addWorkout(workout: WorkoutViewModel) -> ObjectId {
+        // Add workout view model to the correct workout list and get its ID
+        let workoutID = getWorkoutListViewModel(for: workout.rawDate).addWorkout(workoutViewModel: workout)
         return workoutID
     }
     
+    // Gets the workout list for a given month and year
     func getWorkoutListViewModel(for date: Date) -> WorkoutListViewModel {
         // Get year and month from date
         let yearMonth = DateService.getYearMonth(for: date)
@@ -44,8 +48,9 @@ class WorkoutGroupsController: ObservableObject {
             return viewModel
         }
         else {
-            // If not found, create a new view model from the given year and month
+            // If not found, create a new workout list for the given year and month
             let newViewModel = WorkoutListViewModel(workouts: [], yearMonth: yearMonth)
+            // Add the new list to the dictionary
             viewModels[yearMonth] = newViewModel
             
             // Add new key and re-sort
