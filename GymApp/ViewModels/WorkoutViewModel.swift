@@ -7,6 +7,7 @@ class WorkoutViewModel: ObservableObject, Identifiable {
     @Published private var _notes: String
     @Published private var _exercises: List<Exercise>
     @Published private var _isTemplate: Bool
+    @Published private var _rawDate: Date
     
     @Published var workout: Workout
     
@@ -16,6 +17,7 @@ class WorkoutViewModel: ObservableObject, Identifiable {
         self._notes = workout.notes
         self._exercises = workout.exercises
         self._isTemplate = workout.isTemplate
+        self._rawDate = workout.rawDate
     }
     
     var id: ObjectId {
@@ -96,9 +98,18 @@ class WorkoutViewModel: ObservableObject, Identifiable {
             workout.rawDate
         }
         set {
+            let oldDate = rawDate
             RealmService.shared.update {
-                self.workout.rawDate = newValue
+                self.workout.setDateValues(from: newValue)
             }
+            _rawDate = workout.rawDate
+            
+            // Send notification
+            NotificationCenter.default.post(name: .workoutDateDidChange, object: self, userInfo: [
+                "oldDate": oldDate,
+                "newDate": rawDate,
+                "id": id
+            ])
         }
     }
     
@@ -139,5 +150,6 @@ class WorkoutViewModel: ObservableObject, Identifiable {
         self._notes = workout.notes
         self._exercises = workout.exercises
         self._isTemplate = workout.isTemplate
+        self._rawDate = workout.rawDate
     }
 }

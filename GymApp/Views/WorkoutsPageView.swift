@@ -14,20 +14,7 @@ struct WorkoutsPageView: View {
             
             ZStack {
                 
-                VStack(spacing: 5) {
-                    
-                    // Top bar
-                    HStack {
-                        // Workouts text
-                        Text("Workouts")
-                            .font(.title)
-                            .bold()
-                            .padding(.leading)
-                        
-                        Spacer()
-                        
-                    }
-                    .padding(.top) // Add padding at the top
+                VStack() {
                     
                     // List view models
                     List {
@@ -35,10 +22,24 @@ struct WorkoutsPageView: View {
                     }
                     .scrollDismissesKeyboard(.interactively)
                     
-                    Spacer()
+                }
+                .toolbar {
                     
-                    // Buttons
-                    HStack {
+                    // Top tool bar
+                    ToolbarItem(placement: .navigationBarLeading) {
+                        // Workouts text
+                        Text("Workouts")
+                            .font(.title)
+                            .bold()
+                            .padding(.leading)
+                        
+                        Spacer()
+                    }
+                    
+                    // Bottom tool bar
+                    ToolbarItemGroup(placement: .bottomBar) {
+                        
+                        Spacer()
                         
                         // Calendar picker
                         DatePicker(
@@ -55,36 +56,36 @@ struct WorkoutsPageView: View {
                         .padding(.trailing)
                         
                         
-                        // Load templates button
+                        // New workout menu
                         Menu {
+                            
+                            // From templates
                             Button(action: { showTemplates.toggle() }) {
-                                Label("Load Template", systemImage: "folder")
+                                Label("Load From Template", systemImage: "folder")
                             }
-                        } label: {
-                            Image(systemName: "folder")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 36, height: 36)
-                                .foregroundColor(.yellow)
-                                .padding()
+                            
+                            // Empty workout button
+                            Button(action: {
+                                withAnimation {
+                                    workoutsController.newWorkout.name = workoutsController.newWorkout.weekDay
+                                    addWorkout()
+                                }}) {
+                                    Label("New workout", systemImage: "plus.circle.fill")
+                                }
+                            
                         }
-                        
-                        // Add workout button
-                        Button(action: {
-                            withAnimation {
-                                workoutsController.newWorkout.name = workoutsController.newWorkout.weekDay
-                                addWorkout()
-                            }}) {
-                                Image(systemName: "plus.circle.fill")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 40, height: 40)
-                                    .foregroundColor(.blue)
-                                    .padding(.trailing)
-                            }
-                        
+                    label: {
+                        Image(systemName: "plus.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 48, height: 48)
+                            .foregroundColor(.blue)
                     }
+                    .padding([.trailing, .leading])
+                    }
+                    
                 }
+                
                 
                 // Templates overlay
                 if showTemplates {

@@ -11,6 +11,37 @@ class WorkoutGroupsController: ObservableObject {
     @Published var viewModels: [ YearMonth: WorkoutListViewModel ] = [:]
     @Published var keys: [YearMonth] = []
     
+    init() {
+        NotificationCenter.default.addObserver(self, selector: #selector(workoutDateDidChange(_:)), name: .workoutDateDidChange, object: nil)
+    }
+    
+    @objc private func workoutDateDidChange(_ notification: Notification) {
+        // Extract the information from the notification
+        guard let userInfo = notification.userInfo,
+              let oldDate = userInfo["oldDate"] as? Date,
+              let newDate = userInfo["newDate"] as? Date,
+              let workoutID = userInfo["id"] as? ObjectId else {
+            return
+        }
+        
+        let oldYearMonth = DateService.getYearMonth(for: oldDate)
+        let newYearMonth = DateService.getYearMonth(for: newDate)
+            
+        // Check whether the month has changed
+        if (oldYearMonth != newYearMonth) {
+            // Regroup
+            let oldList = getWorkoutListViewModel(for: oldDate)
+            let newList = getWorkoutListViewModel(for: newDate)
+            
+            // Add workout to new list
+            let _ = newList.addWorkout(workoutViewModel: notification.object as! WorkoutViewModel)
+            // Remove from old list
+            oldList.removeWorkout(at: oldList.workouts.firstIndex(where: { $0.id == workoutID })!)
+            
+            sortKeys()
+        }
+    }
+    
     func loadAllMonths() {
         // Get and sort keys
         keys = WorkoutLoaderService().getStoredYearMonths()

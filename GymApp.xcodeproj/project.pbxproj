@@ -39,6 +39,7 @@
 		15B9BA1F2C55B5DD0000F832 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 15B9BA1D2C55B5DD0000F832 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		15B9BA252C55B5E30000F832 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 15B9BA242C55B5E30000F832 /* RealmSwift */; settings = {ATTRIBUTES = (Weak, ); }; };
 		15B9BA262C55B5E30000F832 /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 15B9BA242C55B5E30000F832 /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		15CA20472C616FFE0082AAED /* NotificationExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15CA20462C616FFE0082AAED /* NotificationExtensions.swift */; };
 		15DA47CD2B36A2D400FF6C95 /* GymAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DA47CC2B36A2D400FF6C95 /* GymAppApp.swift */; };
 		15DA47D12B36A2D700FF6C95 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15DA47D02B36A2D700FF6C95 /* Assets.xcassets */; };
 		15DA47D52B36A2D700FF6C95 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 15DA47D42B36A2D700FF6C95 /* Preview Assets.xcassets */; };
@@ -128,6 +129,7 @@
 		15B0A6842C55BCE50050A0C3 /* RealmService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmService.swift; sourceTree = "<group>"; };
 		15B0A6862C55C2090050A0C3 /* ExerciseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseViewModel.swift; sourceTree = "<group>"; };
 		15B0A6882C55CD5B0050A0C3 /* SetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetViewModel.swift; sourceTree = "<group>"; };
+		15CA20462C616FFE0082AAED /* NotificationExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationExtensions.swift; sourceTree = "<group>"; };
 		15DA47C92B36A2D400FF6C95 /* GymApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GymApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		15DA47CC2B36A2D400FF6C95 /* GymAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GymAppApp.swift; sourceTree = "<group>"; };
 		15DA47D02B36A2D700FF6C95 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -237,6 +239,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		15CA20452C616FE70082AAED /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				15CA20462C616FFE0082AAED /* NotificationExtensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		15DA47C02B36A2D400FF6C95 = {
 			isa = PBXGroup;
 			children = (
@@ -261,6 +271,7 @@
 		15DA47CB2B36A2D400FF6C95 /* GymApp */ = {
 			isa = PBXGroup;
 			children = (
+				15CA20452C616FE70082AAED /* Extensions */,
 				15AFA78E2C4F792800F6B482 /* Controllers */,
 				159D4B5F2B48E1AF0045360E /* Services */,
 				159D4B542B4537B30045360E /* ViewModels */,
@@ -469,6 +480,7 @@
 				159D4B442B452BF50045360E /* ContentView.swift in Sources */,
 				159D4B532B4532330045360E /* Notes.swift in Sources */,
 				159D4B5A2B4541D40045360E /* SetDetailView.swift in Sources */,
+				15CA20472C616FFE0082AAED /* NotificationExtensions.swift in Sources */,
 				15192E612C51D645003CD92C /* NotesView.swift in Sources */,
 				15B0A6872C55C2090050A0C3 /* ExerciseViewModel.swift in Sources */,
 				159D4B582B4540A80045360E /* ExerciseCardView.swift in Sources */,

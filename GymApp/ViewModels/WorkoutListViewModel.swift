@@ -43,7 +43,26 @@ class WorkoutListViewModel: ObservableObject {
         return workoutViewModel.id
     }
     
+    
+    // Removes workout from list without deleting realm instance
     func removeWorkout(at index: Int) {
+        guard index < self.workouts.count else { return }
+
+        // Remove from local list
+        self.workouts.remove(at: index)
+        
+        // Re-sort workouts
+        sortWorkouts()
+        
+        // Check if empty
+        if workouts.isEmpty {
+            // If empty, remove month from groups
+            WorkoutGroupsController.shared.removeMonth(for: yearMonth)
+        }
+    }
+    
+    // Removes workout from list AND deletes realm instance
+    func deleteWorkout(at index: Int) {
         guard index < self.workouts.count else { return }
         let workoutViewModel = self.workouts[index]
         

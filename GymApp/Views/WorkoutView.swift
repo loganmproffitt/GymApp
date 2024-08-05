@@ -8,22 +8,16 @@ struct WorkoutView: View {
     var body: some View {
         ZStack {
             // Exercise vertical stack
-            VStack(spacing: -5) {
+            VStack() {
                 
                 // Workout name and date
                 HStack {
+                    
+                    // Workout name
                     TextField(workoutViewModel.name, text: $workoutViewModel.name)
                         .font(.title)
                         .padding(.leading)
-                        .onChange(of: workoutViewModel.name) { oldValue, newValue in
-                            //workoutViewModel.name = newValue
-                        }
-                    Spacer() // Pushes the TextField to the left
                     
-                    Text(workoutViewModel.formattedDate)
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                        .padding(.trailing)
                 }
                 .padding(.top) // Add padding at the top
                 
@@ -48,12 +42,38 @@ struct WorkoutView: View {
                     }
                 }
                 .scrollDismissesKeyboard(.interactively)
+             
+            }
+            .toolbar {
                 
-                Spacer()
-                
-                // Tool bar
-                HStack {
+                // Top tool bar
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    /*
+                    // Date
+                    Text(workoutViewModel.formattedDate)
+                        .font(.headline)
+                        .bold()
+                        .foregroundColor(.white)
+                        .padding(.trailing)*/
                     
+                    // Calendar picker
+                    DatePicker(
+                        "",
+                        selection: $workoutViewModel.rawDate,
+                        displayedComponents: [.date]
+                    )
+                    .datePickerStyle(.compact)
+                    .labelsHidden()
+                    .background(Color.clear)
+                    .cornerRadius(10)
+                    .shadow(radius: 10)
+                    .transition(.slide)
+                    .padding(.trailing)
+                    
+                }
+                
+                // Bottom tool bar
+                ToolbarItemGroup(placement: .bottomBar) {
                     Spacer()
                     
                     // Template menu
@@ -79,14 +99,14 @@ struct WorkoutView: View {
                             workoutViewModel.addExercise()
                         }
                     }) {
-                        Image(systemName: "plus.circle.fill")
+                        Image(systemName: "plus.circle")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 36, height: 36)
+                            .frame(width: 48, height: 48)
                             .foregroundColor(.blue)
-                            .padding()
                     }
                     .padding()
+                    
                 }
             }
             

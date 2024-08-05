@@ -47,7 +47,7 @@ struct WorkoutListView: View {
                 .onDelete { indexSet in
                     withAnimation {
                         if let index = indexSet.first {
-                            viewModel.removeWorkout(at: index)
+                            viewModel.deleteWorkout(at: index)
                         }
                     }
                 }
