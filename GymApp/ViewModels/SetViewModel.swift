@@ -5,15 +5,21 @@ class SetViewModel: ObservableObject {
     
     @Published var set: Set
     
+    @Published var _weight: String
+    @Published var _reps: String
+    
     init(set: Set) {
         self.set = set
+        _weight = set.weight
+        _reps = set.reps
     }
     
     var weight: String {
         get {
-            set.weight
+            _weight
         }
         set {
+            _weight = newValue
             RealmService.shared.update {
                 self.set.weight = newValue
             }
@@ -22,9 +28,10 @@ class SetViewModel: ObservableObject {
     
     var reps: String {
         get {
-            set.reps
+            _reps
         }
         set {
+            _reps = newValue
             RealmService.shared.update {
                 self.set.reps = newValue
             }

@@ -67,7 +67,7 @@ struct WorkoutsPageView: View {
                             // Empty workout button
                             Button(action: {
                                 withAnimation {
-                                    workoutsController.newWorkout.name = workoutsController.newWorkout.weekDay
+                                    workoutsController.newWorkout.name = DateService.getWeekday(for: date)
                                     addWorkout()
                                 }}) {
                                     Label("New workout", systemImage: "plus.circle.fill")

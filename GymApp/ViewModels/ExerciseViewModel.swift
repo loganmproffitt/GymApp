@@ -3,10 +3,23 @@ import RealmSwift
 
 class ExerciseViewModel: ObservableObject, Identifiable {
     
+    @Published private var _name: String
+    @Published private var _completed: Bool
+    @Published private var _notes: String
+    @Published private var _setCountModified: Bool
+    @Published private var _setCount: String
+    @Published private var _sets: List<Set>
+    
     @Published var exercise: Exercise
     
     init(exercise: Exercise) {
         self.exercise = exercise
+        self._name = exercise.name
+        self._completed = exercise.completed
+        self._notes = exercise.notes
+        self._setCountModified = exercise.setCountModified
+        self._setCount = exercise.setCount
+        self._sets = exercise.sets
     }
     
     var id: ObjectId {
@@ -15,9 +28,10 @@ class ExerciseViewModel: ObservableObject, Identifiable {
     
     var name: String {
         get {
-            exercise.name
+            _name
         }
         set {
+            _name = newValue
             RealmService.shared.update {
                 self.exercise.name = newValue
             }
@@ -26,9 +40,10 @@ class ExerciseViewModel: ObservableObject, Identifiable {
     
     var completed: Bool {
         get {
-            exercise.completed
+            _completed
         }
         set {
+            _completed = newValue
             RealmService.shared.update {
                 self.exercise.completed = newValue
             }
@@ -37,9 +52,10 @@ class ExerciseViewModel: ObservableObject, Identifiable {
     
     var notes: String {
         get {
-            exercise.notes
+            _notes
         }
         set {
+            _notes = newValue
             RealmService.shared.update {
                 self.exercise.notes = newValue
             }
@@ -48,9 +64,10 @@ class ExerciseViewModel: ObservableObject, Identifiable {
     
     var setCountModified: Bool {
         get {
-            exercise.setCountModified
+            _setCountModified
         }
         set {
+            _setCountModified = newValue
             RealmService.shared.update {
                 self.exercise.setCountModified = newValue
             }
@@ -59,9 +76,10 @@ class ExerciseViewModel: ObservableObject, Identifiable {
     
     var setCount: String {
         get {
-            exercise.setCount
+            _setCount
         }
         set {
+            _setCount = newValue
             RealmService.shared.update {
                 self.exercise.setCount = newValue
             }
@@ -70,20 +88,21 @@ class ExerciseViewModel: ObservableObject, Identifiable {
     
     var sets: List<Set> {
         get {
-            exercise.sets
+            _sets
         }
         set {
+            _sets = newValue
             RealmService.shared.update {
                 self.exercise.sets.removeAll()
                 self.exercise.sets.append(objectsIn: newValue)
             }
-            objectWillChange.send()
         }
     }
     
     // Toggle checkbox helper
     func toggleCheckbox() {
-        let newState = !exercise.completed
+        let newState = !_completed
+        _completed = newState
         RealmService.shared.update {
             self.exercise.completed = newState
         }
@@ -95,7 +114,7 @@ class ExerciseViewModel: ObservableObject, Identifiable {
         RealmService.shared.update {
             self.exercise.sets.append(newSet)
         }
-        objectWillChange.send()
+        _sets = exercise.sets
     }
     
     // Remove set helper
@@ -104,6 +123,6 @@ class ExerciseViewModel: ObservableObject, Identifiable {
             guard index < self.sets.count else { return }
             self.exercise.sets.remove(at: index)
         }
-        objectWillChange.send()
+        _sets = exercise.sets
     }
 }

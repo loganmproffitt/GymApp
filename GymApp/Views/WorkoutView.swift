@@ -10,7 +10,7 @@ struct WorkoutView: View {
             // Exercise vertical stack
             VStack() {
                 
-                // Workout name and date
+                // Workout name
                 HStack {
                     
                     // Workout name
@@ -19,8 +19,7 @@ struct WorkoutView: View {
                         .padding(.leading)
                     
                 }
-                .padding(.top) // Add padding at the top
-                
+            
                 
                 // Exercises list
                 List {
@@ -48,13 +47,6 @@ struct WorkoutView: View {
                 
                 // Top tool bar
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    /*
-                    // Date
-                    Text(workoutViewModel.formattedDate)
-                        .font(.headline)
-                        .bold()
-                        .foregroundColor(.white)
-                        .padding(.trailing)*/
                     
                     // Calendar picker
                     DatePicker(
