@@ -3,8 +3,7 @@ import SwiftUI
 struct ExerciseDetailView: View {
     
     @EnvironmentObject var exerciseViewModel: ExerciseViewModel
-    @State private var setsVisible = false
-    @State private var notesVisible = false
+    @State private var notesVisible = true
 
     @FocusState private var isTextFieldFocused: Bool
     
@@ -13,20 +12,29 @@ struct ExerciseDetailView: View {
         // Sets with outline
         VStack() {//spacing: -5) {
             
-            // Notes label
-            HStack {
-                Text("Notes")
-                    .font(.footnote)
-                Image(systemName: "note.text")
-            }
+            Button(action: {
+                notesVisible.toggle()
+            }) {
+                HStack {
+                    Text("Notes")
+                        .font(.footnote)
+                    Image(systemName: "note.text")
+                }
                 .contentShape(Rectangle())
-                .buttonStyle(BorderlessButtonStyle())
+                .foregroundColor(.yellow)
+            }
+            .buttonStyle(BorderlessButtonStyle())
             
             // Notes section
-            NotesView()
-            .environmentObject(exerciseViewModel)
-            .padding([.top, .bottom])
+            if notesVisible {
+                NotesView()
+                    .environmentObject(exerciseViewModel)
+                    .padding([.top, .bottom])
+            }
  
+            Divider()
+            .padding(.top)
+            /*
             // Sets label
             HStack {
                 Text("Sets")
@@ -36,10 +44,7 @@ struct ExerciseDetailView: View {
                 .padding(.top, 0.8)
                 .contentShape(Rectangle())
                 .buttonStyle(BorderlessButtonStyle())
-            
-            Divider()
-            .padding(.top)
-            
+            */
             // Display sets
             ForEach(exerciseViewModel.exercise.sets.indices, id: \.self) { index in
                 HStack {

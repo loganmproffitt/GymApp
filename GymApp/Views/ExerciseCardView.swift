@@ -26,8 +26,8 @@ struct ExerciseCardView: View {
                 }) {
                     Image(systemName: exerciseViewModel.completed ? "checkmark.circle.fill" : "circle")
                         .foregroundColor(exerciseViewModel.completed ? .yellow : .gray)
-                        .font(.title2) // Smaller font size for the checkbox
-                        .padding(3) // Reduced padding around the checkbox
+                        .font(.title2)
+                        .padding(3)
                 }
                 .buttonStyle(BorderlessButtonStyle())
                 
