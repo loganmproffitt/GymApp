@@ -18,6 +18,22 @@ struct WorkoutView: View {
                         .font(.title)
                         .padding(.leading)
                     
+                    Spacer()
+                    
+                    // Calendar picker
+                    DatePicker(
+                        "",
+                        selection: $workoutViewModel.rawDate,
+                        displayedComponents: [.date]
+                    )
+                    .datePickerStyle(.compact)
+                    //.labelsHidden()
+                    .background(Color.black)
+                    .cornerRadius(10)
+                    .shadow(radius: 10)
+                    .transition(.slide)
+                    .padding(.trailing)
+                    
                 }
             
                 
@@ -41,6 +57,8 @@ struct WorkoutView: View {
                     }
                 }
                 .scrollDismissesKeyboard(.interactively)
+                
+                Spacer()
              
             }
             .toolbar {
@@ -48,42 +66,31 @@ struct WorkoutView: View {
                 // Top tool bar
                 ToolbarItem(placement: .navigationBarTrailing) {
                     
-                    // Calendar picker
-                    DatePicker(
-                        "",
-                        selection: $workoutViewModel.rawDate,
-                        displayedComponents: [.date]
-                    )
-                    .datePickerStyle(.compact)
-                    .labelsHidden()
-                    .background(Color.clear)
-                    .cornerRadius(10)
-                    .shadow(radius: 10)
-                    .transition(.slide)
-                    .padding(.trailing)
+                
                     
                 }
                 
                 // Bottom tool bar
                 ToolbarItemGroup(placement: .bottomBar) {
-                    Spacer()
-                    
+  
                     // Template menu
                     Menu {
                         Button(action: { showTemplates.toggle() }) {
                             Label("Load Template", systemImage: "folder")
                         }
                         Button(action: { TemplateController.shared.addTemplate(workout: workoutViewModel)} ) {
-                            Label("Save Template", systemImage: "square.and.arrow.down")
+                            Label("Save as Template", systemImage: "square.and.arrow.down")
                         }
                     } label: {
                         Image(systemName: "folder")
                             .resizable()
                             .aspectRatio(contentMode: .fit)
-                            .frame(width: 36, height: 36)
+                            .frame(width: 30, height: 30)
                             .foregroundColor(.yellow)
                             .padding()
                     }
+                    
+                    Spacer()
                     
                     // Add exercise button
                     Button(action: {
@@ -91,13 +98,19 @@ struct WorkoutView: View {
                             workoutViewModel.addExercise()
                         }
                     }) {
-                        Image(systemName: "plus.circle")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 48, height: 48)
-                            .foregroundColor(.blue)
+                        HStack {
+                            Image(systemName: "plus.circle")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.blue)
+                            Text("Add Exercise")
+                                .foregroundColor(.blue)
+                            
+                        }
                     }
-                    .padding()
+                    
+                
                     
                 }
             }

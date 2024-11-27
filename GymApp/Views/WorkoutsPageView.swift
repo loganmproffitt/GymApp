@@ -38,8 +38,7 @@ struct WorkoutsPageView: View {
                     
                     // Bottom tool bar
                     ToolbarItemGroup(placement: .bottomBar) {
-                        
-                        Spacer()
+
                         
                         // Calendar picker
                         DatePicker(
@@ -61,7 +60,7 @@ struct WorkoutsPageView: View {
                             
                             // From templates
                             Button(action: { showTemplates.toggle() }) {
-                                Label("Load From Template", systemImage: "folder")
+                                Label("Load Template", systemImage: "folder")
                             }
                             
                             // Empty workout button
@@ -75,11 +74,15 @@ struct WorkoutsPageView: View {
                             
                         }
                     label: {
-                        Image(systemName: "plus.circle")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 48, height: 48)
-                            .foregroundColor(.blue)
+                        HStack {
+                            Image(systemName: "plus.circle")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.blue)
+                            Text("Add Workout")
+                                .foregroundColor(.blue)
+                        }
                     }
                     .padding([.trailing, .leading])
                     }

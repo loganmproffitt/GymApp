@@ -13,7 +13,8 @@ struct WorkoutCardView: View {
             HStack {
                 Text(workoutViewModel.name)
                 Spacer()
-                Text("\(workoutViewModel.formattedDate)")
+                Text("\(DateService.getWeekday(for: workoutViewModel.rawDate)),\n\(DateService.getMonthName(for: workoutViewModel.month)) \(workoutViewModel.day)")
+                    .font(.headline)
             }
             .padding()
         }
