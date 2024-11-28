@@ -32,10 +32,8 @@ class TemplateController: ObservableObject {
     }
     
     func deleteTemplate(at index: Int) {
-        print("Delete clicked")
         guard index < self.templates.count else { return }
         let templateViewModel = self.templates[index]
-        print("Deleting template")
         
         // Remove from Realm
         RealmService.shared.delete(templateViewModel.workout)

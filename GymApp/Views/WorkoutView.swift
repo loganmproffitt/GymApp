@@ -117,9 +117,6 @@ struct WorkoutView: View {
                             
                         }
                     }
-                    
-                
-                    
                 }
             }
         }

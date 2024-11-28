@@ -14,9 +14,10 @@ struct TemplatesView: View {
         List {
             // Title
             Section(header: Text("Templates")
-                .font(.headline)
-                .padding(.top, 10)
-                .padding(.bottom, 5)) {
+                .font(.title)
+                .bold()
+                .foregroundColor(.yellow)
+            ){
                     
                 // Display templates
                 ForEach(controller.templates.indices, id: \.self) { index in
