@@ -12,17 +12,12 @@ struct WorkoutListView: View {
             HStack {
                 
                 // Month text
-                Text("\(DateService.getMonthName(for: viewModel.yearMonth.month))")
+                Text("\(DateService.getMonthName(for: viewModel.yearMonth.month)) \(String(viewModel.yearMonth.year))")
                     .font(.title2)
                     .bold()
-                    .padding([.top, .leading, .trailing])
-           
-                // Year text
-                Text("\(String(viewModel.yearMonth.year))")
-                .font(.headline)
-                    .bold()
                     .padding([.top, .trailing])
-                
+                    .foregroundColor(.yellow)
+
                 Spacer()
             
                 // Button for hiding month

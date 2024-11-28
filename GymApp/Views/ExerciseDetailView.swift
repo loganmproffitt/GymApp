@@ -21,7 +21,7 @@ struct ExerciseDetailView: View {
                     Image(systemName: "note.text")
                 }
                 .contentShape(Rectangle())
-                .foregroundColor(.yellow)
+                .foregroundColor(.blue)
             }
             .buttonStyle(BorderlessButtonStyle())
             

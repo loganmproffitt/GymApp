@@ -38,53 +38,37 @@ struct WorkoutsPageView: View {
                     
                     // Bottom tool bar
                     ToolbarItemGroup(placement: .bottomBar) {
-
                         
-                        // Calendar picker
-                        DatePicker(
-                            "",
-                            selection: $date,
-                            displayedComponents: [.date]
-                        )
-                        .datePickerStyle(.compact)
-                        .labelsHidden()
-                        .background(Color.clear)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        .transition(.slide)
-                        .padding(.trailing)
-                        
-                        
-                        // New workout menu
-                        Menu {
-                            
+                        HStack {
                             // From templates
                             Button(action: { showTemplates.toggle() }) {
-                                Label("Load Template", systemImage: "folder")
+                                HStack {
+                                    Image(systemName: "folder")
+                                        .foregroundColor(.yellow)
+                                    Text("Load Template")
+                                        .foregroundColor(.yellow)
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             }
+                            .padding()
+                            
+                            Spacer()
                             
                             // Empty workout button
                             Button(action: {
                                 withAnimation {
                                     workoutsController.newWorkout.name = DateService.getWeekday(for: date)
                                     addWorkout()
-                                }}) {
-                                    Label("New workout", systemImage: "plus.circle.fill")
                                 }
-                            
+                            }) {
+                                HStack {
+                                    Image(systemName: "plus.circle.fill")
+                                    Text("New Workout")
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            .padding()
                         }
-                    label: {
-                        HStack {
-                            Image(systemName: "plus.circle")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 30, height: 30)
-                                .foregroundColor(.blue)
-                            Text("Add Workout")
-                                .foregroundColor(.blue)
-                        }
-                    }
-                    .padding([.trailing, .leading])
                     }
                     
                 }

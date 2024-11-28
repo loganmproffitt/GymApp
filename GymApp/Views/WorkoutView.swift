@@ -12,35 +12,17 @@ struct WorkoutView: View {
                 
                 // Workout name
                 HStack {
-                    
                     // Workout name
                     TextField(workoutViewModel.name, text: $workoutViewModel.name)
                         .font(.title)
-                        .padding(.leading)
-                    
+                        .padding([.top, .leading, .trailing])
+                        .minimumScaleFactor(0.5)
+                
                     Spacer()
-                    
-                    // Calendar picker
-                    DatePicker(
-                        "",
-                        selection: $workoutViewModel.rawDate,
-                        displayedComponents: [.date]
-                    )
-                    .datePickerStyle(.compact)
-                    //.labelsHidden()
-                    .background(Color.black)
-                    .cornerRadius(10)
-                    .shadow(radius: 10)
-                    .transition(.slide)
-                    .padding(.trailing)
-                    
                 }
-            
                 
                 // Exercises list
                 List {
-                    Section(header: Text("Exercises").font(.caption).foregroundColor(.gray)) {
-                        
                         // List exercises
                         ForEach(workoutViewModel.exercises.indices, id: \.self) { index in
                             ExerciseCardView(
@@ -52,11 +34,11 @@ struct WorkoutView: View {
                                     workoutViewModel.removeExercise(at: index)
                                 }
                             }
-                        }
                         
                     }
                 }
                 .scrollDismissesKeyboard(.interactively)
+                .padding(0)
                 
                 Spacer()
              
@@ -65,9 +47,21 @@ struct WorkoutView: View {
                 
                 // Top tool bar
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    
-                
-                    
+                    HStack {
+                        Spacer()
+                        // Calendar picker
+                        DatePicker(
+                            "",
+                            selection: $workoutViewModel.rawDate,
+                            displayedComponents: [.date]
+                        )
+                        .datePickerStyle(.compact)
+                        //.labelsHidden()
+                        .background(Color.clear)
+                        .cornerRadius(10)
+                        .shadow(radius: 10)
+                        .transition(.slide)
+                    }
                 }
                 
                 // Bottom tool bar
@@ -75,19 +69,20 @@ struct WorkoutView: View {
   
                     // Template menu
                     Menu {
-                        Button(action: { showTemplates.toggle() }) {
-                            Label("Load Template", systemImage: "folder")
-                        }
                         Button(action: { TemplateController.shared.addTemplate(workout: workoutViewModel)} ) {
                             Label("Save as Template", systemImage: "square.and.arrow.down")
                         }
+                        Button(action: { showTemplates.toggle() }) {
+                            Label("Load Template", systemImage: "folder")
+                        }
                     } label: {
-                        Image(systemName: "folder")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 30, height: 30)
-                            .foregroundColor(.yellow)
-                            .padding()
+                        HStack {
+                            Image(systemName: "folder")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.yellow)
+                        }
                     }
                     
                     Spacer()
@@ -132,14 +127,14 @@ struct WorkoutView: View {
                             }
                         })
                         .environmentObject(workoutViewModel)
-                        .padding()
+                        //.padding()
                         .cornerRadius(10)
                         .shadow(radius: 10)
                         
                 }
                 .frame(width: 300, height: 400)
-                .padding()
-            }
+                //.padding()
+           }
             
         }
     }

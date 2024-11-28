@@ -11,12 +11,20 @@ struct WorkoutCardView: View {
             .environmentObject(workoutViewModel)
         ) {
             HStack {
-                Text(workoutViewModel.name)
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(workoutViewModel.name)
+                        .font(.headline)
+                        .foregroundColor(.primary)
+                    
+                    Text("\(DateService.getWeekday(for: workoutViewModel.rawDate)) \(workoutViewModel.day)")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                }
+                
                 Spacer()
-                Text("\(DateService.getWeekday(for: workoutViewModel.rawDate)),\n\(DateService.getMonthName(for: workoutViewModel.month)) \(workoutViewModel.day)")
-                    .font(.headline)
             }
-            .padding()
+            .padding([.leading, .trailing], 3)
+            .padding([.bottom, .top], 5)
         }
         
     }
