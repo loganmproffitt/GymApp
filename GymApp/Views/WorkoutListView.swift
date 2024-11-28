@@ -28,7 +28,7 @@ struct WorkoutListView: View {
                 }) {
                 Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
                     .padding([.top, .trailing])
-                    .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                    .foregroundColor(.gray)
                 }
             }
         ) {

@@ -15,10 +15,12 @@ struct WorkoutCardView: View {
                     Text(workoutViewModel.name)
                         .font(.headline)
                         .foregroundColor(.primary)
+                        .minimumScaleFactor(0.5)
                     
-                    Text("\(DateService.getWeekday(for: workoutViewModel.rawDate)) \(workoutViewModel.day)")
+                    Text(DateService.getStringDate(for: workoutViewModel.rawDate))
                         .font(.caption)
                         .foregroundColor(.gray)
+                        .minimumScaleFactor(0.5)
                 }
                 
                 Spacer()

@@ -54,6 +54,7 @@ struct ExerciseCardView: View {
                     }) {
                         HStack {
                             Image(systemName: setsVisible ? "chevron.up" : "chevron.down")
+                                .foregroundColor(.gray)
                         }
                         .padding()
                     }

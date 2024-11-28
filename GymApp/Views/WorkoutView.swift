@@ -3,26 +3,50 @@ import SwiftUI
 struct WorkoutView: View {
     
     @EnvironmentObject var workoutViewModel: WorkoutViewModel
-    @State var showTemplates = false
+    @State private var showCalendar = false
 
     var body: some View {
         ZStack {
+            
             // Exercise vertical stack
-            VStack() {
-                
-                // Workout name
+            VStack(spacing: 0) {
                 HStack {
-                    // Workout name
-                    TextField(workoutViewModel.name, text: $workoutViewModel.name)
+                    // Date text
+                    Text(DateService.getStringDate(for: workoutViewModel.rawDate))
                         .font(.title)
                         .padding([.top, .leading, .trailing])
-                        .minimumScaleFactor(0.5)
-                
+                        .foregroundColor(.yellow)
+                        .minimumScaleFactor(0.7)
+                    
                     Spacer()
                 }
                 
+                if showCalendar {
+                    DatePicker(
+                        "",
+                        selection: $workoutViewModel.rawDate,
+                        displayedComponents: [.date]
+                    )
+                    .datePickerStyle(.graphical) // Graphical calendar for inline display
+                    .padding(.leading)
+                    Button(action: { withAnimation { showCalendar.toggle() }}) {
+                        Text("Done")
+                            .foregroundColor(.blue)
+                            .padding()
+                    }
+                }
+
                 // Exercises list
                 List {
+                    
+                    Section(header: // Workout name
+                            TextField(workoutViewModel.name, text: $workoutViewModel.name)
+                                .font(.title2)
+                                .bold()
+                                .padding([.trailing])
+                                .minimumScaleFactor(0.5)
+                                .textCase(nil)
+                    ){
                         // List exercises
                         ForEach(workoutViewModel.exercises.indices, id: \.self) { index in
                             ExerciseCardView(
@@ -34,11 +58,11 @@ struct WorkoutView: View {
                                     workoutViewModel.removeExercise(at: index)
                                 }
                             }
-                        
+                        }
                     }
                 }
                 .scrollDismissesKeyboard(.interactively)
-                .padding(0)
+                .listStyle(.insetGrouped)
                 
                 Spacer()
              
@@ -49,18 +73,18 @@ struct WorkoutView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     HStack {
                         Spacer()
-                        // Calendar picker
-                        DatePicker(
-                            "",
-                            selection: $workoutViewModel.rawDate,
-                            displayedComponents: [.date]
-                        )
-                        .datePickerStyle(.compact)
-                        //.labelsHidden()
-                        .background(Color.clear)
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        .transition(.slide)
+                        
+                        // Calendar button
+                        Button(action: {
+                            withAnimation {
+                                showCalendar.toggle()
+                            }
+                        }) {
+                            Image(systemName: "calendar")
+                                .font(.title3)
+                                .foregroundColor(.blue)
+                        }
+                        
                     }
                 }
                 
@@ -94,7 +118,7 @@ struct WorkoutView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fit)
                                 .frame(width: 30, height: 30)
-                                .foregroundColor(.yellow)
+                                .foregroundColor(.blue)
                         }
                     }
                     

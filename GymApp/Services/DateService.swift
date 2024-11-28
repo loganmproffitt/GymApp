@@ -35,4 +35,26 @@ class DateService {
         dateFormatter.dateFormat = "EEEE"
         return dateFormatter.string(from: date)
     }
+    
+    static func getStringDate(for date: Date) -> String {
+        let dateFormatter = DateFormatter()
+            
+        // Get weekday and month
+        dateFormatter.dateFormat = "EEEE, MMMM"
+        let weekdayMonth = dateFormatter.string(from: date)
+    
+        // Get day number
+        let calendar = Calendar.current
+        let day = calendar.component(.day, from: date)
+        
+        let suffix: String
+        switch day % 10 {
+            case 1 where day != 11: suffix = "st"
+            case 2 where day != 12: suffix = "nd"
+            case 3 where day != 13: suffix = "rd"
+            default: suffix = "th"
+        }
+        
+        return "\(weekdayMonth) \(day)\(suffix)"
+    }
 }

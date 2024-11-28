@@ -51,9 +51,9 @@ struct WorkoutsPageView: View {
                             {
                                 HStack {
                                     Image(systemName: "folder")
-                                        .foregroundColor(.yellow)
+                                        .foregroundColor(.blue)
                                     Text("Load Template")
-                                        .foregroundColor(.yellow)
+                                        .foregroundColor(.blue)
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)
                             }
@@ -79,34 +79,6 @@ struct WorkoutsPageView: View {
                     }
                     
                 }
-                
-                /*
-                // Templates overlay
-                if showTemplates {
-                   Color.black.opacity(0.2)
-                        .ignoresSafeArea()
-                        .onTapGesture {
-                            withAnimation {
-                                showTemplates = false
-                            }
-                        }
-                    
-                    VStack {
-                        TemplatesView(onTemplateSelected: {
-                                withAnimation {
-                                    showTemplates = false
-                                    addWorkout()
-                                }
-                            })
-                        .environmentObject(workoutsController.newWorkout)
-                            .padding()
-                            .cornerRadius(10)
-                            .shadow(radius: 10)
-                            
-                    }
-                    .frame(width: 300, height: 400)
-                    .padding()
-                }*/
             }
         }
     }
