@@ -8,6 +8,8 @@ struct TemplatesView: View {
     
     var onTemplateSelected: () -> Void
     
+    @Environment(\.presentationMode) private var presentationMode
+    
     var body: some View {
         List {
             // Title
@@ -21,6 +23,8 @@ struct TemplatesView: View {
                     Button(action: {
                         controller.copyTemplate(at: index, to: workoutViewModel)
                         onTemplateSelected()
+                        // Dismiss view
+                        presentationMode.wrappedValue.dismiss()
                     }) {
                         HStack {
                             Text(controller.templates[index].name)

@@ -7,7 +7,6 @@ struct NotesView: View {
     var body: some View {
         TextEditor(text: $exerciseViewModel.notes)
         .frame(height: 100)
-        //.padding(2)
         .background(Color(red: 0.15, green: 0.15, blue: 0.15))
         .cornerRadius(10)
         .frame(minWidth: 0, maxWidth: .infinity)

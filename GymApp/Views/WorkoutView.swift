@@ -72,9 +72,22 @@ struct WorkoutView: View {
                         Button(action: { TemplateController.shared.addTemplate(workout: workoutViewModel)} ) {
                             Label("Save as Template", systemImage: "square.and.arrow.down")
                         }
-                        Button(action: { showTemplates.toggle() }) {
-                            Label("Load Template", systemImage: "folder")
+                        
+                        // Templates view
+                        NavigationLink(destination: TemplatesView(onTemplateSelected: {
+                        })
+                        .environmentObject(workoutViewModel))
+                        {
+                            HStack {
+                                Image(systemName: "folder")
+                                    .foregroundColor(.yellow)
+                                Text("Load Template")
+                                    .foregroundColor(.yellow)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         }
+                        .padding()
+                        
                     } label: {
                         HStack {
                             Image(systemName: "folder")
@@ -109,33 +122,6 @@ struct WorkoutView: View {
                     
                 }
             }
-            
-            // Templates overlay
-            if showTemplates {
-               Color.black.opacity(0.2)
-                    .ignoresSafeArea()
-                    .onTapGesture {
-                        withAnimation {
-                            showTemplates = false
-                        }
-                    }
-                
-                VStack {
-                    TemplatesView(onTemplateSelected: {
-                            withAnimation {
-                                showTemplates = false
-                            }
-                        })
-                        .environmentObject(workoutViewModel)
-                        //.padding()
-                        .cornerRadius(10)
-                        .shadow(radius: 10)
-                        
-                }
-                .frame(width: 300, height: 400)
-                //.padding()
-           }
-            
         }
     }
 }

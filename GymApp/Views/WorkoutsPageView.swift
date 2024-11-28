@@ -41,7 +41,14 @@ struct WorkoutsPageView: View {
                         
                         HStack {
                             // From templates
-                            Button(action: { showTemplates.toggle() }) {
+                            NavigationLink(destination: TemplatesView(onTemplateSelected: {
+                                withAnimation {
+                                    showTemplates = false
+                                    addWorkout()
+                                }
+                            })
+                            .environmentObject(workoutsController.newWorkout))
+                            {
                                 HStack {
                                     Image(systemName: "folder")
                                         .foregroundColor(.yellow)
@@ -73,7 +80,7 @@ struct WorkoutsPageView: View {
                     
                 }
                 
-                
+                /*
                 // Templates overlay
                 if showTemplates {
                    Color.black.opacity(0.2)
@@ -99,7 +106,7 @@ struct WorkoutsPageView: View {
                     }
                     .frame(width: 300, height: 400)
                     .padding()
-                }
+                }*/
             }
         }
     }
