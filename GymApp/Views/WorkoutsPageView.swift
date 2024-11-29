@@ -7,9 +7,8 @@ struct WorkoutsPageView: View {
     
     @State private var selectedWorkoutID: ObjectId? = nil
     @State private var date = Date()
-    @State private var showTemplates = false
-    
     @State private var newWorkoutAdded = false
+    @State private var showTemplates = false
 
     var body: some View {
         NavigationStack {
@@ -42,25 +41,18 @@ struct WorkoutsPageView: View {
                     ToolbarItemGroup(placement: .bottomBar) {
                         
                         HStack {
-                            // From templates
-                            NavigationLink(destination: TemplatesView(onTemplateSelected: {
-                                withAnimation {
-                                    showTemplates = false
-                                    addWorkout()
-                                }
-                            })
-                            .environmentObject(workoutsController.newWorkout))
-                            {
-                                HStack {
-                                    Image(systemName: "folder")
-                                        .foregroundColor(.blue)
-                                        .frame(width: 30, height: 30)
-                                    Text("Load Template")
-                                        .foregroundColor(.blue)
-                                }
-                                .frame(maxWidth: .infinity, alignment: .leading)
+    
+                            HStack {
+                                Image(systemName: "folder")
+                                    .foregroundColor(.blue)
+                                    .frame(width: 30, height: 30)
+                                Text("Load Template")
+                                    .foregroundColor(.blue)
                             }
-                            .padding()
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .onTapGesture {
+                                showTemplates = true
+                            }
                             
                             Spacer()
                             
@@ -83,27 +75,36 @@ struct WorkoutsPageView: View {
                     }
                     
                 }
-               
             }
-            /*
+            // Templates page
+            .navigationDestination(isPresented: $showTemplates) {
+                TemplatesView(dismiss: false, onTemplateSelected: {
+                        withAnimation {
+                            addWorkout()
+                            showTemplates = false
+                        }
+                    })
+                    .environmentObject(workoutsController.newWorkout)
+                }
+            // Move to new workout or template
             .navigationDestination(isPresented: $newWorkoutAdded) {
-                if let workoutID = selectedWorkoutID, // Ensure workoutID exists
+                if let workoutID = selectedWorkoutID,
                    let workoutIndex = workoutsController
                        .getWorkoutListViewModel(for: date)
-                       .getWorkoutIndex(for: workoutID), // Ensure index is valid
-                   workoutIndex >= 0, // Safety check for a non-negative index
-                   workoutIndex < workoutsController.getWorkoutListViewModel(for: date).workouts.count // Ensure index is within bounds
+                       .getWorkoutIndex(for: workoutID),
+                   workoutIndex >= 0,
+                   workoutIndex < workoutsController.getWorkoutListViewModel(for: date).workouts.count
                 {
                     let workout = workoutsController
                         .getWorkoutListViewModel(for: date)
-                        .workouts[workoutIndex] // Safely access the workout
+                        .workouts[workoutIndex]
 
                     WorkoutView()
-                        .environmentObject(workout) // Pass the fetched workout
+                        .environmentObject(workout)
                 } else {
-                    Text("Workout not found.") // Fallback for invalid data
+                    Text("Workout not found.")
                 }
-            }*/
+            }
         }
     }
     

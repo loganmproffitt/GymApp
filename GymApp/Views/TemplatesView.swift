@@ -6,6 +6,8 @@ struct TemplatesView: View {
     @ObservedObject var controller = TemplateController.shared
     @EnvironmentObject var workoutViewModel: WorkoutViewModel
     
+    var dismiss: Bool
+    
     var onTemplateSelected: () -> Void
     
     @Environment(\.presentationMode) private var presentationMode
@@ -24,8 +26,9 @@ struct TemplatesView: View {
                     Button(action: {
                         controller.copyTemplate(at: index, to: workoutViewModel)
                         onTemplateSelected()
-                        // Dismiss view
-                        presentationMode.wrappedValue.dismiss()
+                        if dismiss {
+                            presentationMode.wrappedValue.dismiss()
+                        }
                     }) {
                         HStack {
                             Text(controller.templates[index].name)
