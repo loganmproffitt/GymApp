@@ -36,6 +36,12 @@ class DateService {
         return dateFormatter.string(from: date)
     }
     
+    static func getDay(for date: Date) -> Int? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd"
+        return Int(dateFormatter.string(from: date))
+    }
+    
     static func getStringDate(for date: Date) -> String {
         let dateFormatter = DateFormatter()
             

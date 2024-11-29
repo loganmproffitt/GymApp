@@ -2,7 +2,7 @@ import Foundation
 import RealmSwift
 
 class WorkoutViewModel: ObservableObject, Identifiable {
-    
+
     @Published private var _name: String
     @Published private var _notes: String
     @Published private var _exercises: List<Exercise>

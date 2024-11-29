@@ -26,6 +26,8 @@ class WorkoutGroupsController: ObservableObject {
         
         let oldYearMonth = DateService.getYearMonth(for: oldDate)
         let newYearMonth = DateService.getYearMonth(for: newDate)
+        let oldDay = DateService.getDay(for: oldDate)
+        let newDay = DateService.getDay(for: newDate)
             
         // Check whether the month has changed
         if (oldYearMonth != newYearMonth) {
@@ -39,6 +41,13 @@ class WorkoutGroupsController: ObservableObject {
             oldList.removeWorkout(at: oldList.workouts.firstIndex(where: { $0.id == workoutID })!)
             
             sortKeys()
+        }
+        
+        // Sort days
+        if (oldDay != newDay) {
+            // Regroup
+            let list = getWorkoutListViewModel(for: oldDate)
+            list.sortWorkouts()
         }
     }
     

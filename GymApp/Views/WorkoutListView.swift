@@ -35,9 +35,9 @@ struct WorkoutListView: View {
             // Check whether to expand
             if isExpanded {
                 // Display workouts
-                ForEach(viewModel.workouts.indices, id: \.self) { index in
+                ForEach(viewModel.workouts, id: \.id) { workout in
                     WorkoutCardView()
-                        .environmentObject(viewModel.workouts[index])
+                        .environmentObject(workout)
                 }
                 .onDelete { indexSet in
                     withAnimation {

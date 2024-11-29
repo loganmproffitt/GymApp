@@ -8,6 +8,8 @@ struct WorkoutsPageView: View {
     @State private var selectedWorkoutID: ObjectId? = nil
     @State private var date = Date()
     @State private var showTemplates = false
+    
+    @State private var newWorkoutAdded = false
 
     var body: some View {
         NavigationStack {
@@ -79,7 +81,27 @@ struct WorkoutsPageView: View {
                     }
                     
                 }
+               
             }
+            /*
+            .navigationDestination(isPresented: $newWorkoutAdded) {
+                if let workoutID = selectedWorkoutID, // Ensure workoutID exists
+                   let workoutIndex = workoutsController
+                       .getWorkoutListViewModel(for: date)
+                       .getWorkoutIndex(for: workoutID), // Ensure index is valid
+                   workoutIndex >= 0, // Safety check for a non-negative index
+                   workoutIndex < workoutsController.getWorkoutListViewModel(for: date).workouts.count // Ensure index is within bounds
+                {
+                    let workout = workoutsController
+                        .getWorkoutListViewModel(for: date)
+                        .workouts[workoutIndex] // Safely access the workout
+
+                    WorkoutView()
+                        .environmentObject(workout) // Pass the fetched workout
+                } else {
+                    Text("Workout not found.") // Fallback for invalid data
+                }
+            }*/
         }
     }
     
@@ -89,6 +111,7 @@ struct WorkoutsPageView: View {
         // Set date info and add workout, storing the new ID
         workoutsController.newWorkout.setDateValues(date: date)
         selectedWorkoutID = workoutsController.addWorkout(workout: workoutsController.newWorkout)
+        newWorkoutAdded = true
         
         // Reset date and workout
         date = Date()

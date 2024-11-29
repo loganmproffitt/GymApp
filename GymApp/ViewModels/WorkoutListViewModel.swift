@@ -43,6 +43,13 @@ class WorkoutListViewModel: ObservableObject {
         return workoutViewModel.id
     }
     
+    func getWorkoutIndex(for workoutID: ObjectId) -> Int? {
+        guard let index = workouts.firstIndex(where: { $0.id == workoutID }) else {
+                return nil
+        }
+        return index
+    }
+    
     
     // Removes workout from list without deleting realm instance
     func removeWorkout(at index: Int) {
