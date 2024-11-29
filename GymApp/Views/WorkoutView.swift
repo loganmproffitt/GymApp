@@ -14,6 +14,7 @@ struct WorkoutView: View {
                     // Date text
                     Text(DateService.getStringDate(for: workoutViewModel.rawDate))
                         .font(.title)
+                        .bold()
                         .padding([.top, .leading, .trailing])
                         .foregroundColor(.yellow)
                         .minimumScaleFactor(0.7)

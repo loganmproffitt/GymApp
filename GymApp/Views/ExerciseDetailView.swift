@@ -33,9 +33,6 @@ struct ExerciseDetailView: View {
                     .environmentObject(exerciseViewModel)
                     .padding([.top, .bottom])
             }
- 
-            Divider()
-            .padding(.top)
 
             // Display sets
             ForEach(exerciseViewModel.exercise.sets.indices, id: \.self) { index in

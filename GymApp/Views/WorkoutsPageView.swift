@@ -54,6 +54,7 @@ struct WorkoutsPageView: View {
                                 HStack {
                                     Image(systemName: "folder")
                                         .foregroundColor(.blue)
+                                        .frame(width: 30, height: 30)
                                     Text("Load Template")
                                         .foregroundColor(.blue)
                                 }
@@ -72,6 +73,7 @@ struct WorkoutsPageView: View {
                             }) {
                                 HStack {
                                     Image(systemName: "plus.circle.fill")
+                                        .frame(width: 30, height: 30)
                                     Text("New Workout")
                                 }
                                 .frame(maxWidth: .infinity, alignment: .leading)

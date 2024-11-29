@@ -9,8 +9,7 @@ class RealmService {
     private init() {
         let config = Realm.Configuration(
             schemaVersion: 1, // Increment when models change
-            deleteRealmIfMigrationNeeded: true
-            /*
+
             migrationBlock: { migration, oldSchemaVersion in
                 if oldSchemaVersion < 1 {
                     // Migration block
@@ -18,8 +17,7 @@ class RealmService {
                         
                     }
                 }
-                // Add more if statements as needed for future schema versions
-            }*/
+            }
         )
         
         Realm.Configuration.defaultConfiguration = config
