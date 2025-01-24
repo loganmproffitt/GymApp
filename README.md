@@ -7,3 +7,5 @@ This app was developed with Swift in XCode and uses Realm for data persistence.
   <img src="https://github.com/user-attachments/assets/be1fce85-09ab-46fa-91bf-4da90adf6064" alt="Image 1" width="300">
   <img src="https://github.com/user-attachments/assets/c0f03aa2-a019-4838-b628-0c2c20973f04" alt="Image 2" width="300">
 </div>
+
+[Download the Demo Video](gymapp_demo.mov)
